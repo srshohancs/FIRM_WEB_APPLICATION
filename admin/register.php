@@ -87,7 +87,7 @@
 												</div>
 											</div>
 											<div class="col-12 text-center">
-												<p class="mb-0">Already have an account? <a href="authentication-signin.html">Sign in here</a>
+												<p class="mb-0">Already have an account? <a href="index.php">Sign in here</a>
 												</p>
 											</div>
 										</form>
