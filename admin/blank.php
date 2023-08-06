@@ -2,7 +2,6 @@
 	include "inc/header.php";
 ?>
 
-	<!--start page wrapper -->
 		<div class="page-wrapper">
 			<div class="page-content">
 				<!--breadcrumb-->
@@ -24,7 +23,9 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="table-responsive">
-							
+							<!-- Main Body -->
+							<h1>hello</h1>
+							<!-- Main Body -->
 						</div>
 					</div>
 				</div>
