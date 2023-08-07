@@ -19,15 +19,17 @@
 					<div class="menu-title">Dashboard</div>
 				</a>
 			</li>
-			<li class="menu-label">UI Elements</li>
+			<li class="menu-label">Role Management</li>
 			<li>
 				<a href="javascript:;" class="has-arrow">
-					<div class="parent-icon"><i class='bx bx-cart'></i>
+					<div class="parent-icon"><i class='bx bx-user-circle'></i>
 					</div>
-					<div class="menu-title">eCommerce</div>
+					<div class="menu-title">Role Management</div>
 				</a>
 				<ul>
-					<li> <a href="ecommerce-products.html"><i class="bx bx-right-arrow-alt"></i>Products</a>
+					<li> <a href="users.php?do=Manage"><i class="bx bx-right-arrow-alt"></i>Manage All Users</a>
+					</li>
+					<li> <a href="users.php?do=Add"><i class="bx bx-right-arrow-alt"></i>Add New User</a>
 					</li>
 				</ul>
 			</li>

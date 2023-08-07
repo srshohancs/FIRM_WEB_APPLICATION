@@ -115,6 +115,22 @@
 	<script src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
 	<script src="assets/plugins/jquery-knob/excanvas.js"></script>
 	<script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+	<!-- Datatable js -->
+	<script src="assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+	<script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			var table = $('#example3').DataTable( {
+				lengthChange: false,
+				buttons: [ 'copy', 'excel', 'pdf', 'print']
+			} );
+		 
+			table.buttons().container()
+				.appendTo( '#example3_wrapper .col-md-6:eq(0)' );
+		} );
+	</script>
+	<!-- Datatable js -->
 	  <script>
 		  $(function() {
 			  $(".knob").knob();
