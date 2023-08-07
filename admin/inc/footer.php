@@ -123,6 +123,10 @@
 	  <script src="assets/js/index.js"></script>
 	<!--app JS-->
 	<script src="assets/js/app.js"></script>
+
+	<?php  
+		ob_end_flush();
+	?>
 </body>
 
 

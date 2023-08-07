@@ -1,3 +1,8 @@
+<?php  
+	ob_start();
+	include "db.php";
+?>
+
 <!doctype html>
 <html lang="en" class="semi-dark">
 
@@ -35,7 +40,7 @@
 	<div class="wrapper">
 
 		<!-- ########## START: SIDE BAR ########## -->
-		<?php include "inc/Sidebar.php"; ?>
+		<?php include "inc/leftmenu.php"; ?>
 		<!-- ########## END: SIDE BAR ########## -->
 
 		<!-- ########## START: SIDE BAR ########## -->
