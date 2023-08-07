@@ -248,8 +248,12 @@
 						}
 					}
 					else { ?>
-						<div class="alert alert-warning text-center" role="alert">
-						  Sorry! please password and repassword use same input.
+						<div class="page-wrapper">
+							<div class="page-content">
+								<div class="alert alert-warning text-center" role="alert">
+								  Sorry! please password and repassword use same input.
+								</div>
+							</div>
 						</div>
 					<?php }
 				}
