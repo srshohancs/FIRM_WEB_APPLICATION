@@ -16,7 +16,7 @@
 									<ol class="breadcrumb mb-0 p-0">
 										<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 										</li>
-										<li class="breadcrumb-item active" aria-current="page">Users</li>
+										<li class="breadcrumb-item active" aria-current="page">Users Manage</li>
 									</ol>
 								</nav>
 							</div>
@@ -76,13 +76,40 @@
 
 												  			<tr>
 														      <th scope="row"><?php echo $i; ?></th>
-														      <td>image</td>
+														      <td>
+														      	<?php  
+														      		if (!empty($user_image)) {
+																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 60px";>';
+																	}
+																	else {
+																		echo '<img src="assets/images/users/default.png" style="width: 60px";>';
+																	}
+														      	?>
+														      </td>
 														      <td><?php echo $user_name; ?></td>
 														      <td><?php echo $user_email; ?></td>
 														      <td><?php echo $user_phone; ?></td>
 														      <td><?php echo $user_address; ?></td>
-														      <td><?php echo $role; ?></td>
-														      <td><?php echo $status; ?></td>
+														      <td>
+														      	<?php  
+														      		if ($role == 1) { ?>
+														      			<span class="badge text-bg-success">ADMIN</span>
+														      		<?php }
+														      		else if ($role == 2) { ?>
+														      			<span class="badge text-bg-primary">USER</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<?php  
+														      		if ($status == 1) { ?>
+														      			<span class="badge text-bg-info">ACTIVE</span>
+														      		<?php }
+														      		else if ($status == 0) { ?>
+														      			<span class="badge text-bg-danger">INACTIVE</span>
+														      		<?php }
+														      	?>
+														      </td>
 														      <td><?php echo $join_date; ?></td>
 														      <td>Action</td>
 														    </tr>
@@ -119,7 +146,7 @@
 									<ol class="breadcrumb mb-0 p-0">
 										<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 										</li>
-										<li class="breadcrumb-item active" aria-current="page">Users</li>
+										<li class="breadcrumb-item active" aria-current="page">Add User</li>
 									</ol>
 								</nav>
 							</div>
