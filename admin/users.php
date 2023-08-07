@@ -160,7 +160,7 @@
 													<div class="col-lg-4">
 														<div class="mb-3">
 															<label for="">Phone No.</label>
-															<input type="tel" name="re_password" class="form-control" placeholder="enter phone no.." required autocomplete="off">
+															<input type="tel" name="phone" class="form-control" placeholder="enter phone no.." required autocomplete="off">
 														</div>
 
 														<div class="mb-3">
@@ -171,7 +171,7 @@
 													<div class="col-lg-4">
 														<div class="mb-3">
 															<label for="">Role</label>
-															<select class="form-select">
+															<select class="form-select" name="role">
 															  <option value="2">Please select the user role</option>
 															  <option value="1">Admin</option>
 															  <option value="2">User</option>
@@ -180,7 +180,7 @@
 
 														<div class="mb-3">
 															<label for="">Status</label>
-															<select class="form-select">
+															<select class="form-select" name="status">
 															  <option value="1">Please select the Status</option>
 															  <option value="1">Active</option>
 															  <option value="0">InActive</option>
@@ -212,7 +212,47 @@
 			<?php }
 
 			else if ( $do == "Store" ) {
-				
+				if (isset($_POST['addUser'])) {
+					$fname 			= $_POST['fname'];
+					$email 			= $_POST['email'];
+					$password 		= $_POST['password'];
+					$re_password 	= $_POST['re_password'];
+					$phone 			= $_POST['phone'];
+					$address 		= $_POST['address'];
+					$role 			= $_POST['role'];
+					$status 		= $_POST['status'];
+					
+					$image 			= $_FILES['image']['name'];
+					$temp_img 		= $_FILES['image']['tmp_name'];
+
+
+					if ($password == $re_password) {
+						$hassedPass = sha1($password);
+
+						if (!empty($image)) {
+							$img = rand(0, 999999) . "_" . $image;
+							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+						}
+						else {
+							$img = '';
+						}
+
+						$addSql = "INSERT INTO users (user_name, user_email, user_password,	user_phone,	user_address, role, status, user_image,	join_date) VALUES('$fname', '$email', '$hassedPass', '$phone', '$address', '$role', '$status', '$img', now())";
+						$addQuery = mysqli_query($db, $addSql);
+
+						if ($addQuery) {
+							header("Location: users.php?do=Manage");
+						}
+						else {
+							die ("Mysql Error." .mysqli_error($db) );
+						}
+					}
+					else { ?>
+						<div class="alert alert-warning text-center" role="alert">
+						  Sorry! please password and repassword use same input.
+						</div>
+					<?php }
+				}
 			}
 
 			else if ( $do == "Edit" ) {
