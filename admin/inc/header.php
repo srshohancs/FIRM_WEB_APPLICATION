@@ -29,11 +29,16 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
 	<link href="assets/css/app.css" rel="stylesheet">
 	<link href="assets/css/icons.css" rel="stylesheet">
+
+	<!-- FONT AWESOME CDN LINK -->
+	<script src="https://kit.fontawesome.com/0c66e46c25.js" crossorigin="anonymous"></script>
+	
 	<!-- Theme Style CSS -->
 	<link rel="stylesheet" href="assets/css/dark-theme.css" />
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
-	<title>Rukada - Responsive Bootstrap 5 Admin Template</title>
+	<link rel="stylesheet" href="assets/css/custom.css" />
+	<title>Dashboard | Home</title>
 </head>
 
 <body>

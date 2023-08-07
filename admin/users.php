@@ -111,7 +111,18 @@
 														      	?>
 														      </td>
 														      <td><?php echo $join_date; ?></td>
-														      <td>Action</td>
+														      <td>
+														      	<div class="action-btn">
+																	<ul>
+																	    <li>
+																	      <a href=""><i class="fa-regular fa-pen-to-square edit"></i></a>
+																	    </li>
+																	    <li>
+																	      <a href=""><i class="fa-regular fa-trash-can trush"></i></a>
+																	    </li>
+																	</ul>
+																</div>
+														      </td>
 														    </tr>
 
 												  			<?php
