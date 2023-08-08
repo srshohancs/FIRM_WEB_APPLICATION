@@ -27,11 +27,11 @@
 					<div class="menu-title">Role Management</div>
 				</a>
 				<ul>
-					<li> <a href="users.php?do=Manage"><i class="bx bx-right-arrow-alt"></i>Manage All Users</a>
+					<li> <a href="users.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Users</a>
 					</li>
-					<li> <a href="users.php?do=Add"><i class="bx bx-right-arrow-alt"></i>Add New User</a>
+					<li> <a href="users.php?do=Add"><i class="bx bx-radio-circle"></i>Add New User</a>
 					</li>
-					<li> <a href="users.php?do=ManageTrash"><i class="bx bx-right-arrow-alt"></i>Trash</a>
+					<li> <a href="users.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
 					</li>
 
 				</ul>

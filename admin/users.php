@@ -570,13 +570,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Users Manage</li>
+								<li class="breadcrumb-item active" aria-current="page">Trash Manage</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Manage All Users</h6>
+				<h6 class="mb-0 text-uppercase">Manage All Trash</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
