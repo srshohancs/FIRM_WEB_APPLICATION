@@ -27,6 +27,8 @@
 					<div class="menu-title">Role Management</div>
 				</a>
 				<ul>
+					<li> <a href="users.php?do=adminManage"><i class="bx bx-radio-circle"></i>Super Admin</a>
+					</li>
 					<li> <a href="users.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Users</a>
 					</li>
 					<li> <a href="users.php?do=Add"><i class="bx bx-radio-circle"></i>Add New User</a>
