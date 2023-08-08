@@ -264,16 +264,16 @@
 
 			else if ( $do == "Store" ) {
 				if (isset($_POST['addUser'])) {
-					$fname 			= $_POST['fname'];
-					$email 			= $_POST['email'];
-					$password 		= $_POST['password'];
-					$re_password 	= $_POST['re_password'];
-					$phone 			= $_POST['phone'];
-					$address 		= $_POST['address'];
-					$role 			= $_POST['role'];
-					$status 		= $_POST['status'];
+					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
+					$email 			= mysqli_real_escape_string($db, $_POST['email']);
+					$password 		= mysqli_real_escape_string($db, $_POST['password']);
+					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
+					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
+					$address 		= mysqli_real_escape_string($db, $_POST['address']);
+					$role 			= mysqli_real_escape_string($db, $_POST['role']);
+					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					
-					$image 			= $_FILES['image']['name'];
+					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 		= $_FILES['image']['tmp_name'];
 
 
@@ -370,10 +370,9 @@
 														<div class="col-lg-4">
 															<div class="mb-3">
 																<label for="">Address</label>
-																<textarea name="address" class="form-control" id="" cols="30" rows="10" autocomplete="off" placeholder="address...."><?php echo $user_address; ?></textarea>
+																<textarea name="address" class="form-control" id="" cols="30" rows="4" autocomplete="off" placeholder="address...."><?php echo $user_address; ?></textarea>
 															</div>
-														</div>
-														<div class="col-lg-4">
+
 															<div class="mb-3">
 																<label for="">Role</label>
 																<select class="form-select" name="role">
@@ -391,13 +390,16 @@
 																  <option value="0" <?php if( $status == 0 ){ echo "selected"; } ?>>InActive</option>
 																</select>
 															</div>
+														</div>
+														<div class="col-lg-4">
+															
 
 															<div class="mb-3">
 																<label for="">Image</label>
 																<br><br>
 																<?php  
 														      		if (!empty($user_image)) {
-																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 100px";>';
+																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 100%";>';
 																	}
 																	else {
 																		echo "Sorry! No Image Uploaded.";
@@ -431,23 +433,32 @@
 
 			else if ( $do == "Update" ) {
 				if (isset($_POST['upUser'])) {
-					$updateUserId 	= $_POST['updateUserId'];
-					$fname 			= $_POST['fname'];
-					$email 			= $_POST['email'];
-					$password 		= $_POST['password'];
-					$re_password 	= $_POST['re_password'];
-					$phone 			= $_POST['phone'];
-					$address 		= $_POST['address'];
-					$role 			= $_POST['role'];
-					$status 		= $_POST['status'];
+					$updateUserId 	= mysqli_real_escape_string($db, $_POST['updateUserId']);
+					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
+					$email 			= mysqli_real_escape_string($db, $_POST['email']);
+					$password 		= mysqli_real_escape_string($db, $_POST['password']);
+					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
+					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
+					$address 		= mysqli_real_escape_string($db, $_POST['address']);
+					$role 			= mysqli_real_escape_string($db, $_POST['role']);
+					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					
-					$image 			= $_FILES['image']['name'];
+					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 		= $_FILES['image']['tmp_name'];
 
 					// Only Password & Only Image Chnage
 					if (!empty($password) && !empty($image)) {
 						if ($password == $re_password) {
 							$hassedPass = sha1($password);
+
+							// Delete Old Image From  Folder
+							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
+							$oldImageQuery = mysqli_query($db, $oldImgSql);
+
+							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
+								$oldImage 	= $row['user_image'];
+								unlink("assets/images/users/$img" . $oldImage);
+							}
 
 							$img = rand(0, 999999) . "_" . $image;
 							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
@@ -471,6 +482,15 @@
 
 					// Not Password & Only Image Chnage
 					else if (empty($password) && !empty($image)) {
+
+						// Delete Old Image From  Folder
+							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
+							$oldImageQuery = mysqli_query($db, $oldImgSql);
+
+							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
+								$oldImage 	= $row['user_image'];
+								unlink("assets/images/users/$img" . $oldImage);
+							}
 
 						$img = rand(0, 999999) . "_" . $image;
 						move_uploaded_file($temp_img, 'assets/images/users/' . $img);
