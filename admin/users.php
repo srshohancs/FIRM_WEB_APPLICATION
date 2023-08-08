@@ -672,22 +672,22 @@
 															      <a href="users.php?do=Edit&uId=<?php echo $user_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
 															    </li>
 															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $user_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+															      <a href=""  data-bs-toggle="modal" data-bs-target="#delId<?php echo $user_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
 															    </li>
 															</ul>
 														</div>
 
 														<!-- Modal Start -->
-														<div class="modal fade" id="uId<?php echo $user_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="delId<?php echo $user_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														  <div class="modal-dialog">
 														    <div class="modal-content">
 														      <div class="modal-header">
-														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Move <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $user_name; ?></span> Trash folder!!</h1>
+														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $user_name; ?></span> !!</h1>
 														        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														      </div>
 														      <div class="modal-body">
 														        <div class="modal-btn">
-														        	<a href="users.php?do=Trash&tId=<?php echo $user_id; ?>"class="btn btn-danger me-3">Trash</a>
+														        	<a href="users.php?do=Delete&DId=<?php echo $user_id; ?>"class="btn btn-danger me-3">Delete</a>
 														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
 														        </div>
 														      </div>
@@ -719,7 +719,18 @@
 			<?php }
 
 			else if ( $do == "Delete" ) {
-				
+				if (isset($_GET['DId'])) {
+					$deleteId = $_GET['DId'];
+					$deleteSql = "DELETE FROM users WHERE user_id='$deleteId' ";
+					$deleteQuery = mysqli_query($db, $deleteSql);
+
+					if ($deleteQuery) {
+						header("Location: users.php?do=Manage");
+					}
+					else {
+						die("Mysql Error." . mysqli_error($db));
+					}
+				}
 			}
 		?>
 
