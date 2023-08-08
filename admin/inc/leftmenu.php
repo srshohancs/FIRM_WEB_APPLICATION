@@ -31,6 +31,9 @@
 					</li>
 					<li> <a href="users.php?do=Add"><i class="bx bx-right-arrow-alt"></i>Add New User</a>
 					</li>
+					<li> <a href="users.php?do=ManageTrash"><i class="bx bx-right-arrow-alt"></i>Trash</a>
+					</li>
+
 				</ul>
 			</li>
 		</ul>
