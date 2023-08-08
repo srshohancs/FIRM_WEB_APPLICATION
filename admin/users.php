@@ -308,13 +308,222 @@
 
 			else if ( $do == "Edit" ) {
 				if (isset($_GET['uId'])) {
-					echo $_GET['uId'];
+					$upId = $_GET['uId'];
+					$upReadSql = "SELECT * FROM users WHERE user_id='$upId'";
+					$upReadQuery = mysqli_query($db, $upReadSql);
+
+					while ( $row = mysqli_fetch_assoc($upReadQuery) ) {
+						$user_id 		= $row['user_id'];
+			  			$user_name 		= $row['user_name'];
+			  			$user_email 	= $row['user_email'];
+			  			$user_phone 	= $row['user_phone'];
+			  			$user_address 	= $row['user_address'];
+			  			$role 			= $row['role'];
+			  			$status 		= $row['status'];
+			  			$user_image 	= $row['user_image'];
+			  			?>
+			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+								<div class="breadcrumb-title pe-3">Users Management</div>
+								<div class="ps-3">
+									<nav aria-label="breadcrumb">
+										<ol class="breadcrumb mb-0 p-0">
+											<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
+											</li>
+											<li class="breadcrumb-item active" aria-current="page">Edit User</li>
+										</ol>
+									</nav>
+								</div>
+							</div>
+							<!--end breadcrumb-->
+							<h6 class="mb-0 text-uppercase">Update <span style="color: green;"><?php echo $user_email; ?></span> Info</h6>
+							<hr>
+							<div class="card">
+								<div class="card-body">
+									<div class="table-responsive">
+										<div id="example3_wrapper" class="dataTables_wrapper dt-bootstrap5">
+											<div class="row">
+												
+												<!-- ########## START: FORM ########## -->
+												<form action="users.php?do=Update" method="POST" enctype="multipart/form-data">
+													<div class="row">
+														<div class="col-lg-4">
+															<div class="mb-3">
+																<label for="">Full Name</label>
+																<input type="text" name="fname" class="form-control" placeholder="enter user name" required autocomplete="off" value="<?php echo $user_name; ?>">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Phone No.</label>
+																<input type="tel" name="phone" class="form-control" placeholder="enter phone no.." required autocomplete="off" value="<?php echo $user_phone; ?>">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Password</label>
+																<input type="password" name="password" class="form-control" placeholder="**********" autocomplete="off">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Re-Password</label>
+																<input type="password" name="re_password" class="form-control" placeholder="**********" autocomplete="off">
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="mb-3">
+																<label for="">Address</label>
+																<textarea name="address" class="form-control" id="" cols="30" rows="10" autocomplete="off" placeholder="address...."><?php echo $user_address; ?></textarea>
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="mb-3">
+																<label for="">Role</label>
+																<select class="form-select" name="role">
+																  <option>Please select the user role</option>
+																  <option value="1" <?php if( $role == 1 ){ echo "selected"; } ?>>Admin</option>
+																  <option value="2" <?php if( $role == 2 ){ echo "selected"; } ?>>User</option>
+																</select>
+															</div>
+
+															<div class="mb-3">
+																<label for="">Status</label>
+																<select class="form-select" name="status">
+																  <option value="">Please select the Status</option>
+																  <option value="1" <?php if( $status == 1 ){ echo "selected"; } ?>>Active</option>
+																  <option value="0" <?php if( $status == 0 ){ echo "selected"; } ?>>InActive</option>
+																</select>
+															</div>
+
+															<div class="mb-3">
+																<label for="">Image</label>
+																<br><br>
+																<?php  
+														      		if (!empty($user_image)) {
+																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 100px";>';
+																	}
+																	else {
+																		echo "Sorry! No Image Uploaded.";
+																	}
+														      	?>
+														      	<br><br>
+																<input class="form-control" name="image" type="file">
+															</div>
+
+															<div class="mb-3">
+																<div class="d-grid gap-2">
+																	<input type="hidden" name="updateUserId" value="<?php echo $user_id; ?>">
+																	<input type="submit" name="upUser" class="btn btn-primary" value="Update New User">
+																</div>
+															</div>
+														</div>
+													</div>													
+												</form>
+												<!-- ########## END: FORM ########## -->
+												
+											</div>										
+										</div>
+									</div>
+								</div>
+							</div>
+			  			<?php 
+					}
 				}
 				
 			}
 
 			else if ( $do == "Update" ) {
-				
+				if (isset($_POST['upUser'])) {
+					$updateUserId 	= $_POST['updateUserId'];
+					$fname 			= $_POST['fname'];
+					$email 			= $_POST['email'];
+					$password 		= $_POST['password'];
+					$re_password 	= $_POST['re_password'];
+					$phone 			= $_POST['phone'];
+					$address 		= $_POST['address'];
+					$role 			= $_POST['role'];
+					$status 		= $_POST['status'];
+					
+					$image 			= $_FILES['image']['name'];
+					$temp_img 		= $_FILES['image']['tmp_name'];
+
+					// Only Password & Only Image Chnage
+					if (!empty($password) && !empty($image)) {
+						if ($password == $re_password) {
+							$hassedPass = sha1($password);
+
+							$img = rand(0, 999999) . "_" . $image;
+							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+
+							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
+							$upateUserQuery = mysqli_query($db, $updateUserSql);
+
+							if ($upateUserQuery) {
+								header("Location: users.php?do=Manage");
+							}
+							else {
+								die ("Mysql Error." .mysqli_error($db) );
+							}
+						}
+						else { ?>
+							<div class="alert alert-warning text-center" role="alert">
+							  Sorry! please password and repassword use same input.
+							</div>
+						<?php }
+					}
+
+					// Not Password & Only Image Chnage
+					else if (empty($password) && !empty($image)) {
+
+						$img = rand(0, 999999) . "_" . $image;
+						move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+
+						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
+						$upateUserQuery = mysqli_query($db, $updateUserSql);
+
+						if ($upateUserQuery) {
+							header("Location: users.php?do=Manage");
+						}
+						else {
+							die ("Mysql Error." .mysqli_error($db) );
+						}
+
+					}
+
+					// Only Password & Not Image Chnage
+					else if (!empty($password) && empty($image)) {
+						if ($password == $re_password) {
+							$hassedPass = sha1($password);
+
+							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
+							$upateUserQuery = mysqli_query($db, $updateUserSql);
+
+							if ($upateUserQuery) {
+								header("Location: users.php?do=Manage");
+							}
+							else {
+								die ("Mysql Error." .mysqli_error($db) );
+							}
+						}
+						else { ?>
+							<div class="alert alert-warning text-center" role="alert">
+							  Sorry! please password and repassword use same input.
+							</div>
+						<?php }
+					}
+
+					// Not Password & Not Image Chnage
+					else if (empty($password) && empty($image)) {
+
+						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
+						$upateUserQuery = mysqli_query($db, $updateUserSql);
+
+						if ($upateUserQuery) {
+							header("Location: users.php?do=Manage");
+						}
+						else {
+							die ("Mysql Error." .mysqli_error($db) );
+						}
+
+					}
+				}
 			}
 
 			else if ( $do == "Trash" ) {
