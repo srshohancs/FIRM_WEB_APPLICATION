@@ -221,6 +221,7 @@
 										  			$user_id 		= $row['user_id'];
 										  			$user_name 		= $row['user_name'];
 										  			$user_email 	= $row['user_email'];
+										  			$user_password 	= $row['user_password'];
 										  			$user_phone 	= $row['user_phone'];
 										  			$user_address 	= $row['user_address'];
 										  			$role 			= $row['role'];
@@ -473,6 +474,7 @@
 						$user_id 		= $row['user_id'];
 			  			$user_name 		= $row['user_name'];
 			  			$user_email 	= $row['user_email'];
+			  			$user_password 	= $row['user_password'];
 			  			$user_phone 	= $row['user_phone'];
 			  			$user_address 	= $row['user_address'];
 			  			$role 			= $row['role'];

@@ -1,6 +1,11 @@
-<?php  
+<?php 
+	session_start(); 
 	ob_start();
 	include "db.php";
+
+	if ( empty($_SESSION['user_id']) || empty($_SESSION['user_email']) ) {
+		header("Location: logout.php");
+	}
 ?>
 
 <!doctype html>
