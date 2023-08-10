@@ -41,9 +41,9 @@
 			<li class="menu-label">Category Management</li>
 			<li>
 				<a href="javascript:;" class="has-arrow">
-					<div class="parent-icon"><i class='bx bx-user-circle'></i>
+					<div class="parent-icon"><i class='bx bx-category'></i>
 					</div>
-					<div class="menu-title">Category Management</div>
+					<div class="menu-title">Category</div>
 				</a>
 				<ul>
 					<li> <a href="category.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Category</a>

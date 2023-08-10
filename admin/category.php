@@ -86,14 +86,14 @@
 												      <td>
 												      	<?php  
 												      		if ($is_parent == 1) { ?>
-												      			<span class="badge text-bg-primary">PARENT</span>
+												      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
 												      		<?php }
 												      	?>
 												      </td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
-												      			<span class="badge text-bg-info">ACTIVE</span>
+												      			<span class="badge text-bg-success">ACTIVE</span>
 												      		<?php }
 												      		else if ($status == 0) { ?>
 												      			<span class="badge text-bg-danger">INACTIVE</span>
@@ -169,17 +169,17 @@
 														      <td>
 														      	<?php  
 														      		if ($is_parent == 1) { ?>
-														      			<span class="badge text-bg-primary">PARENT</span>
+														      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
 														      		<?php }
 														      		else { ?>
-														      			<span class="badge text-bg-info">CHILD</span>
+														      			<span class="badge text-bg-secondary">CHILD CATEGORY</span>
 														      		<?php }
 														      	?>
 														      </td>
 														      <td>
 														      	<?php  
 														      		if ($status == 1) { ?>
-														      			<span class="badge text-bg-info">ACTIVE</span>
+														      			<span class="badge text-bg-success">ACTIVE</span>
 														      		<?php }
 														      		else if ($status == 0) { ?>
 														      			<span class="badge text-bg-danger">INACTIVE</span>
@@ -277,23 +277,23 @@
 
 												<div class="mb-3">
 													<label for="">Select the Parent Category [ If Any ]</label>
-<select class="form-select" name="is_parent">
-  <option value="1">Please select the parent category</option>
-  <?php  
-  	$sql = "SELECT * FROM category WHERE is_parent=1 AND status=1 ORDER BY cat_name ASC ";
-  	$query = mysqli_query($db, $sql);
+													<select class="form-select" name="is_parent">
+													  <option value="1">Please select the parent category</option>
+													  <?php  
+													  	$sql = "SELECT * FROM category WHERE is_parent=1 AND status=1 ORDER BY cat_name ASC ";
+													  	$query = mysqli_query($db, $sql);
 
-  	while( $row = mysqli_fetch_assoc($query) ){
-  		$cat_id  		= $row['cat_id'];
-		$cat_name 		= $row['cat_name'];
-			?>
+													  	while( $row = mysqli_fetch_assoc($query) ){
+													  		$cat_id  		= $row['cat_id'];
+															$cat_name 		= $row['cat_name'];
+																?>
 
-			<option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
+																<option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
 
-			<?php
-  	}
-  ?>
-</select>
+																<?php
+													  	}
+													  ?>
+													</select>
 												</div>
 
 												<div class="mb-3">
@@ -324,8 +324,8 @@
 											</div>
 										</div>
 									</div>													
-								</form>
-								<!-- ########## END: FORM ########## -->
+									</form>
+									<!-- ########## END: FORM ########## -->
 									
 								</div>										
 							</div>
@@ -346,56 +346,55 @@
 
 
 					if (!empty($image)) {
-							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/category/' . $img);
-						}
-						else {
-							$img = '';
-						}
+						$img = rand(0, 999999) . "_" . $image;
+						move_uploaded_file($temp_img, 'assets/images/category/' . $img);
+					}
+					else {
+						$img = '';
+					}
 
-						$addSql = "INSERT INTO category (cat_name, cat_desc, is_parent,	status, cat_image, join_date) VALUES('$catName', '$desc', '$is_parent', '$status', '$img', now())";
-						$addQuery = mysqli_query($db, $addSql);
+					$addSql = "INSERT INTO category (cat_name, cat_desc, is_parent,	status, cat_image, join_date) VALUES('$catName', '$desc', '$is_parent', '$status', '$img', now())";
+					$addQuery = mysqli_query($db, $addSql);
 
-						if ($addQuery) {
-							header("Location: category.php?do=Manage");
-						}
-						else {
-							die ("Mysql Error." .mysqli_error($db) );
-						}
+					if ($addQuery) {
+						header("Location: category.php?do=Manage");
+					}
+					else {
+						die ("Mysql Error." .mysqli_error($db) );
+					}
+
 				}
 			}
 
 			else if ( $do == "Edit" ) {
 				if (isset($_GET['uId'])) {
 					$upId = $_GET['uId'];
-					$upReadSql = "SELECT * FROM users WHERE user_id='$upId'";
+					$upReadSql = "SELECT * FROM category WHERE cat_id='$upId'";
 					$upReadQuery = mysqli_query($db, $upReadSql);
 
 					while ( $row = mysqli_fetch_assoc($upReadQuery) ) {
-						$user_id 		= $row['user_id'];
-			  			$user_name 		= $row['user_name'];
-			  			$user_email 	= $row['user_email'];
-			  			$user_password 	= $row['user_password'];
-			  			$user_phone 	= $row['user_phone'];
-			  			$user_address 	= $row['user_address'];
-			  			$role 			= $row['role'];
+						$cat_id  		= $row['cat_id'];
+			  			$cat_name 		= $row['cat_name'];
+			  			$cat_desc 		= $row['cat_desc'];
+			  			$is_parent 		= $row['is_parent'];
 			  			$status 		= $row['status'];
-			  			$user_image 	= $row['user_image'];
+			  			$join_date 		= $row['join_date'];
+			  			$cat_image 		= $row['cat_image'];
 			  			?>
 			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-								<div class="breadcrumb-title pe-3">Users Management</div>
+								<div class="breadcrumb-title pe-3">Category Management</div>
 								<div class="ps-3">
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 p-0">
 											<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 											</li>
-											<li class="breadcrumb-item active" aria-current="page">Edit User</li>
+											<li class="breadcrumb-item active" aria-current="page">Edit Category</li>
 										</ol>
 									</nav>
 								</div>
 							</div>
 							<!--end breadcrumb-->
-							<h6 class="mb-0 text-uppercase">Update <span style="color: firebrick;"><?php echo $user_email; ?></span> Info</h6>
+							<h6 class="mb-0 text-uppercase">Update <span style="color: firebrick;"><?php echo $cat_name; ?></span> Info</h6>
 							<hr>
 							<div class="card">
 								<div class="card-body">
@@ -404,65 +403,61 @@
 											<div class="row">
 												
 												<!-- ########## START: FORM ########## -->
-												<form action="users.php?do=Update" method="POST" enctype="multipart/form-data">
+												<form action="category.php?do=Update" method="POST" enctype="multipart/form-data">
 													<div class="row">
-														<div class="col-lg-4">
+														<div class="col-lg-6">
 															<div class="mb-3">
-																<label for="">Full Name</label>
-																<input type="text" name="fname" class="form-control" placeholder="enter user name" required autocomplete="off" value="<?php echo $user_name; ?>">
+																<label for="">Category Name</label>
+																<input type="text" name="catName" class="form-control" placeholder="enter category name" required autocomplete="off" value="<?php echo $cat_name; ?>">
 															</div>
 
 															<div class="mb-3">
-																<label for="">Phone No.</label>
-																<input type="tel" name="phone" class="form-control" placeholder="enter phone no.." required autocomplete="off" value="<?php echo $user_phone; ?>">
+																<label for="">Category Description</label>
+																<textarea name="desc" class="form-control" id="" cols="30" rows="4"><?php echo $cat_desc; ?></textarea>
 															</div>
 
 															<div class="mb-3">
-																<label for="">Password</label>
-																<input type="password" name="password" class="form-control" placeholder="**********" autocomplete="off">
-															</div>
+																<label for="">Select the Parent Category [ If Any ]</label>
+																<select class="form-select" name="is_parent">
+																  <option value="1">Please select the parent category</option>
+																  <?php  
+																  	$p_sql = "SELECT * FROM category WHERE is_parent=1 AND status=1 ORDER BY cat_name ASC ";
+																  	$p_query = mysqli_query($db, $p_sql);
 
-															<div class="mb-3">
-																<label for="">Re-Password</label>
-																<input type="password" name="re_password" class="form-control" placeholder="**********" autocomplete="off">
-															</div>
-														</div>
-														<div class="col-lg-4">
-															<div class="mb-3">
-																<label for="">Address</label>
-																<textarea name="address" class="form-control" id="" cols="30" rows="4" autocomplete="off" placeholder="address...."><?php echo $user_address; ?></textarea>
-															</div>
+																  	while( $row = mysqli_fetch_assoc($p_query) ){
+																  		$p_cat_id  		= $row['cat_id'];
+																		$p_cat_name 	= $row['cat_name'];
+																		?>
 
-															<div class="mb-3">
-																<label for="">Role</label>
-																<select class="form-select" name="role">
-																  <option>Please select the user role</option>
-																  <option value="1" <?php if( $role == 1 ){ echo "selected"; } ?>>Admin</option>
-																  <option value="2" <?php if( $role == 2 ){ echo "selected"; } ?>>User</option>
+																		<option value="<?php echo $p_cat_id; ?>" <?php if( $p_cat_id == $is_parent ){ echo "selected"; } ?> ><?php echo $p_cat_name; ?></option>
+
+																		<?php
+																  	}
+																  ?>
 																</select>
 															</div>
 
 															<div class="mb-3">
 																<label for="">Status</label>
 																<select class="form-select" name="status">
-																  <option value="">Please select the Status</option>
+																  <option value="1">Please select the Status</option>
 																  <option value="1" <?php if( $status == 1 ){ echo "selected"; } ?>>Active</option>
 																  <option value="0" <?php if( $status == 0 ){ echo "selected"; } ?>>InActive</option>
 																</select>
-															</div>
+															</div>					
 														</div>
-														<div class="col-lg-4">
-															
 
+														<div class="col-lg-6">
 															<div class="mb-3">
-																<label for="">Image</label>
+																<label for="">Category Image</label>
 																<br><br>
+
 																<?php  
-														      		if (!empty($user_image)) {
-																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 100%; height: 200px;">';
+														      		if (!empty($cat_image)) {
+																		echo '<img src="assets/images/category/' . $cat_image . '" style="width: 100%; height: 200px;">';
 																	}
 																	else {
-																		echo "Sorry! No Image Uploaded.";
+																		echo 'No Image Found';
 																	}
 														      	?>
 														      	<br><br>
@@ -471,12 +466,14 @@
 
 															<div class="mb-3">
 																<div class="d-grid gap-2">
-																	<input type="hidden" name="updateUserId" value="<?php echo $user_id; ?>">
-																	<input type="submit" name="upUser" class="btn btn-primary" value="Update New User">
+																	<input type="hidden" name="updateCategoryId" value="<?php echo $cat_id; ?>">
+
+																	<input type="submit" name="updateCategory" class="btn btn-primary" value="Update Category">
 																</div>
 															</div>
 														</div>
-													</div>													
+													</div>
+												</div>													
 												</form>
 												<!-- ########## END: FORM ########## -->
 												
@@ -492,117 +489,54 @@
 			}
 
 			else if ( $do == "Update" ) {
-				if (isset($_POST['upUser'])) {
-					$updateUserId 	= mysqli_real_escape_string($db, $_POST['updateUserId']);
-					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
-					$email 			= mysqli_real_escape_string($db, $_POST['email']);
-					$password 		= mysqli_real_escape_string($db, $_POST['password']);
-					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
-					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
-					$address 		= mysqli_real_escape_string($db, $_POST['address']);
-					$role 			= mysqli_real_escape_string($db, $_POST['role']);
-					$status 		= mysqli_real_escape_string($db, $_POST['status']);
+				if (isset($_POST['updateCategory'])) {
+					$updateCategoryId 	= mysqli_real_escape_string($db, $_POST['updateCategoryId']);
+					$catName 			= mysqli_real_escape_string($db, $_POST['catName']);
+					$is_parent 			= mysqli_real_escape_string($db, $_POST['is_parent']);
+					$status 			= mysqli_real_escape_string($db, $_POST['status']);
+					$desc 				= mysqli_real_escape_string($db, $_POST['desc']);
 					
-					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
-					$temp_img 		= $_FILES['image']['tmp_name'];
+					$image 				= mysqli_real_escape_string($db,$_FILES['image']['name']);
+					$temp_img 			= $_FILES['image']['tmp_name'];
 
-					// Only Password & Only Image Chnage
-					if (!empty($password) && !empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
+					if (!empty($image)) {
+						$oldImageSql = "SELECT * FROM category WHERE cat_id='$updateCategoryId'";
+						$oldImgQuery = mysqli_query( $db, $oldImageSql );
 
-							// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
-
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
-
-							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
-
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
+						while( $row = mysqli_fetch_assoc($oldImgQuery) ) {
+							$oldcat_image = $row['cat_image'];
+							unlink( "assets/images/category/$img" . $oldcat_image );						
 						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Only Image Chnage
-					else if (empty($password) && !empty($image)) {
-
-						// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
-
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
 
 						$img = rand(0, 999999) . "_" . $image;
-						move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+						move_uploaded_file($temp_img, 'assets/images/category/' . $img);
 
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
+						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status', cat_image='$img' WHERE cat_id='$updateCategoryId' ";
+	
+						$updateQuery = mysqli_query($db, $upSql);
 
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($updateQuery) {
+							header("Location: category.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
 
 					}
+					else if (empty($image)){
 
-					// Only Password & Not Image Chnage
-					else if (!empty($password) && empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
+						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status' WHERE cat_id='$updateCategoryId' ";
+						$updateQuery = mysqli_query($db, $upSql);
 
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
-						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Not Image Chnage
-					else if (empty($password) && empty($image)) {
-
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($updateQuery) {
+							header("Location: category.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-
 					}
+
+					
 				}
 			}
 
