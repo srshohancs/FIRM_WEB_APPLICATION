@@ -35,6 +35,23 @@
 					</li>
 					<li> <a href="users.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
 					</li>
+				</ul>
+			</li>
+
+			<li class="menu-label">Category Management</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-user-circle'></i>
+					</div>
+					<div class="menu-title">Category Management</div>
+				</a>
+				<ul>
+					<li> <a href="category.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Category</a>
+					</li>
+					<li> <a href="category.php?do=Add"><i class="bx bx-radio-circle"></i>Add New Category</a>
+					</li>
+					<li> <a href="category.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
 
 				</ul>
 			</li>
