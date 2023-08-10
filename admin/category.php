@@ -543,11 +543,11 @@
 			else if ( $do == "Trash" ) {
 				if (isset($_GET['tId'])) {
 					$trushId = $_GET['tId'];
-					$trushSql = "UPDATE users SET status=0 WHERE user_id='$trushId'";
+					$trushSql = "UPDATE category SET status=0 WHERE cat_id='$trushId'";
 					$trushQuery = mysqli_query( $db, $trushSql );
 
 					if ($trushQuery) {
-						header("Location: users.php?do=Manage");
+						header("Location: category.php?do=Manage");
 					}
 					else {
 						die("mysql error" . mysqli_error($db));
@@ -558,7 +558,7 @@
 
 			else if ( $do == "ManageTrash" ) { ?>
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">Users Management</div>
+					<div class="breadcrumb-title pe-3">Category Trash Management</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
@@ -582,43 +582,39 @@
 										<thead class="table-dark">
 									    <tr>
 									      <th scope="col">#Sl.</th>
-									      <th scope="col">Image</th>
-									      <th scope="col">Full Name</th>
-									      <th scope="col">Email</th>
-									      <th scope="col">Phone No.</th>
-									      <th scope="col">Address</th>
-									      <th scope="col">Role</th>
+									      <th scope="col">Cat_Image</th>
+									      <th scope="col">Category Name</th>
+									      <th scope="col">Description</th>
+									      <th scope="col">Parent/Child Category</th>
 									      <th scope="col">Status</th>
-									      <th scope="col">Join date</th>
+									      <th scope="col">Join Date</th>
 									      <th scope="col">Action</th>
 									    </tr>
 									  </thead>
 
 									  <tbody>
 									  	<?php  
-									  		$userSql = "SELECT * FROM users WHERE status=0 ORDER BY user_name ASC";
-									  		$userQuery = mysqli_query( $db, $userSql );
-									  		$userCount = mysqli_num_rows($userQuery);
+									  		$catSql = "SELECT * FROM category WHERE status=0 ORDER BY cat_name ASC";
+									  		$catQuery = mysqli_query( $db, $catSql );
+									  		$catCount = mysqli_num_rows($catQuery);
 
-									  		if ($userCount == 0) { ?>
+									  		if ($catCount == 0) { ?>
 									  			<div class="alert alert-warning text-center" role="alert">
-												  Sorry! No User Found into the Database.
+												  Sorry! No Category Found into the Database.
 												</div>
 									  		<?php }
 
 									  		else {
 									  			$i = 0;
 
-										  		while ($row = mysqli_fetch_assoc($userQuery)) {
-										  			$user_id 		= $row['user_id'];
-										  			$user_name 		= $row['user_name'];
-										  			$user_email 	= $row['user_email'];
-										  			$user_phone 	= $row['user_phone'];
-										  			$user_address 	= $row['user_address'];
-										  			$role 			= $row['role'];
+										  		while ($row = mysqli_fetch_assoc($catQuery)) {
+										  			$cat_id  		= $row['cat_id'];
+										  			$cat_name 		= $row['cat_name'];
+										  			$cat_desc 		= $row['cat_desc'];
+										  			$is_parent 		= $row['is_parent'];
 										  			$status 		= $row['status'];
-										  			$user_image 	= $row['user_image'];
 										  			$join_date 		= $row['join_date'];
+										  			$cat_image 		= $row['cat_image'];				
 										  			$i++;
 										  			?>
 
@@ -626,32 +622,30 @@
 												      <th scope="row"><?php echo $i; ?></th>
 												      <td>
 												      	<?php  
-												      		if (!empty($user_image)) {
-																echo '<img src="assets/images/users/' . $user_image . '" style="width: 60px";>';
+												      		if (!empty($cat_image)) {
+																echo '<img src="assets/images/category/' . $cat_image . '" style="width: 60px";>';
 															}
 															else {
-																echo '<img src="assets/images/users/default.png" style="width: 60px";>';
+																echo '<img src="assets/images/category/default.png" style="width: 60px";>';
 															}
 												      	?>
 												      </td>
-												      <td><?php echo $user_name; ?></td>
-												      <td><?php echo $user_email; ?></td>
-												      <td><?php echo $user_phone; ?></td>
-												      <td><?php echo $user_address; ?></td>
+												      <td><?php echo $cat_name; ?></td>
+												      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
 												      <td>
 												      	<?php  
-												      		if ($role == 1) { ?>
-												      			<span class="badge text-bg-success">ADMIN</span>
+												      		if ($is_parent == 1) { ?>
+												      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
 												      		<?php }
-												      		else if ($role == 2) { ?>
-												      			<span class="badge text-bg-primary">USER</span>
+												      		else { ?>
+												      			<span class="badge text-bg-secondary">Child CATEGORY</span>
 												      		<?php }
 												      	?>
 												      </td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
-												      			<span class="badge text-bg-info">ACTIVE</span>
+												      			<span class="badge text-bg-success">ACTIVE</span>
 												      		<?php }
 												      		else if ($status == 0) { ?>
 												      			<span class="badge text-bg-danger">INACTIVE</span>
@@ -663,25 +657,25 @@
 												      	<div class="action-btn">
 															<ul>
 															    <li>
-															      <a href="users.php?do=Edit&uId=<?php echo $user_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+															      <a href="category.php?do=Edit&uId=<?php echo $cat_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
 															    </li>
 															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#delId<?php echo $user_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $cat_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
 															    </li>
 															</ul>
 														</div>
 
 														<!-- Modal Start -->
-														<div class="modal fade" id="delId<?php echo $user_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="uId<?php echo $cat_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														  <div class="modal-dialog">
 														    <div class="modal-content">
 														      <div class="modal-header">
-														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $user_name; ?></span> !!</h1>
+														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $cat_name; ?></span></h1>
 														        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														      </div>
 														      <div class="modal-body">
 														        <div class="modal-btn">
-														        	<a href="users.php?do=Delete&DId=<?php echo $user_id; ?>"class="btn btn-danger me-3">Delete</a>
+														        	<a href="category.php?do=Delete&DId=<?php echo $cat_id; ?>"class="btn btn-danger me-3">Delete</a>
 														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
 														        </div>
 														      </div>
@@ -693,10 +687,99 @@
 												      </td>
 												    </tr>
 
-										  			<?php
-										  		}
+													<?php
 
-									  		}
+														// Sub Category Work
+														$childSql = "SELECT * FROM category WHERE is_parent ='$cat_id' AND status=1 ORDER BY cat_name ASC";
+														$childQuery = mysqli_query( $db, $childSql );	
+
+														while ($row = mysqli_fetch_assoc($childQuery)) {
+															$cat_id  		= $row['cat_id'];
+															$cat_name 		= $row['cat_name'];
+															$cat_desc 		= $row['cat_desc'];
+															$is_parent 		= $row['is_parent'];
+															$status 		= $row['status'];
+															$join_date 		= $row['join_date'];
+															$cat_image 		= $row['cat_image'];				
+															$i++;
+															?>
+
+															<tr>
+														      <th scope="row"><?php echo $i; ?></th>
+														      <td>
+														      	<?php  
+														      		if (!empty($cat_image)) {
+																		echo '<img src="assets/images/category/' . $cat_image . '" style="width: 60px";>';
+																	}
+																	else {
+																		echo '<img src="assets/images/category/default.png" style="width: 60px";>';
+																	}
+														      	?>
+														      </td>
+														      <td> -- <?php echo $cat_name; ?></td>
+														      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
+														      <td>
+														      	<?php  
+														      		if ($is_parent == 1) { ?>
+														      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
+														      		<?php }
+														      		else { ?>
+														      			<span class="badge text-bg-secondary">CHILD CATEGORY</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<?php  
+														      		if ($status == 1) { ?>
+														      			<span class="badge text-bg-success">ACTIVE</span>
+														      		<?php }
+														      		else if ($status == 0) { ?>
+														      			<span class="badge text-bg-danger">INACTIVE</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td><?php echo $join_date; ?></td>
+														      <td>
+														      	<div class="action-btn">
+																	<ul>
+																	    <li>
+																	      <a href="category.php?do=Edit&uId=<?php echo $cat_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+																	    </li>
+																	    <li>
+																	      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $cat_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+																	    </li>
+																	</ul>
+																</div>
+
+																<!-- Modal Start -->
+																<div class="modal fade" id="uId<?php echo $cat_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																  <div class="modal-dialog">
+																    <div class="modal-content">
+																      <div class="modal-header">
+																        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $cat_name; ?></span></h1>
+																        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																      </div>
+																      <div class="modal-body">
+																        <div class="modal-btn">
+																        	<a href="category.php?do=Delete&DId=<?php echo $cat_id; ?>"class="btn btn-danger me-3">Delete</a>
+																        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
+																        </div>
+																      </div>
+																    </div>
+																  </div>
+																</div>
+																<!-- Modal End -->
+
+														      </td>
+														    </tr>
+
+														    <?php
+
+														// Sub Category Work
+													 } //second While Loop
+
+									  		} //first while loop
+									  	}
 									  	?>
 									    
 									  </tbody>
@@ -710,16 +793,17 @@
 						</div>
 					</div>
 				</div>
-			<?php }
+			
+		<?php }
 
 			else if ( $do == "Delete" ) {
 				if (isset($_GET['DId'])) {
 					$deleteId = $_GET['DId'];
-					$deleteSql = "DELETE FROM users WHERE user_id='$deleteId' ";
+					$deleteSql = "DELETE FROM category WHERE cat_id='$deleteId' ";
 					$deleteQuery = mysqli_query($db, $deleteSql);
 
 					if ($deleteQuery) {
-						header("Location: users.php?do=Manage");
+						header("Location: category.php?do=Manage");
 					}
 					else {
 						die("Mysql Error." . mysqli_error($db));
