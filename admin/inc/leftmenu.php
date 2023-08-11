@@ -55,6 +55,24 @@
 
 				</ul>
 			</li>
+
+			<li class="menu-label">Farmer Management</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-donate-blood'></i>
+					</div>
+					<div class="menu-title">About Farmer</div>
+				</a>
+				<ul>
+					<li> <a href="farmer.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Farmer</a>
+					</li>
+					<li> <a href="farmer.php?do=Add"><i class="bx bx-radio-circle"></i>Add New Farmer</a>
+					</li>
+					<li> <a href="farmer.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
+
+				</ul>
+			</li>
 		</ul>
 		<!--end navigation-->
 	</div>
