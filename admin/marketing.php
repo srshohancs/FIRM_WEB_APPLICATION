@@ -342,116 +342,51 @@
 			}
 
 			else if ( $do == "Update" ) {
-				if (isset($_POST['upUser'])) {
-					$updateUserId 	= mysqli_real_escape_string($db, $_POST['updateUserId']);
-					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
-					$email 			= mysqli_real_escape_string($db, $_POST['email']);
-					$password 		= mysqli_real_escape_string($db, $_POST['password']);
-					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
-					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
-					$address 		= mysqli_real_escape_string($db, $_POST['address']);
-					$role 			= mysqli_real_escape_string($db, $_POST['role']);
-					$status 		= mysqli_real_escape_string($db, $_POST['status']);
+				if (isset($_POST['updateProduct'])) {
+					$updateProductId 	= mysqli_real_escape_string($db, $_POST['updateProductId']);
+					$title 				= mysqli_real_escape_string($db, $_POST['title']);
+					$describe 			= mysqli_real_escape_string($db, $_POST['describe']);
+					$status 			= mysqli_real_escape_string($db, $_POST['status']);
 					
-					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
-					$temp_img 		= $_FILES['image']['tmp_name'];
+					$image 				= mysqli_real_escape_string($db,$_FILES['image']['name']);
+					$temp_img 			= $_FILES['image']['tmp_name'];
 
 					// Only Password & Only Image Chnage
-					if (!empty($password) && !empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
-
-							// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
-
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
-
-							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
-
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
-						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Only Image Chnage
-					else if (empty($password) && !empty($image)) {
+					if (!empty($image)) {
 
 						// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
+						$oldImgSql = "SELECT * FROM marketing WHERE m_id='$updateProductId'";
+						$oldImageQuery = mysqli_query($db, $oldImgSql);
 
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
+						while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
+							$oldImage 	= $row['m_image'];
+							unlink("assets/images/marketing/$img" . $oldImage);
+						}
 
 						$img = rand(0, 999999) . "_" . $image;
-						move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+						move_uploaded_file($temp_img, 'assets/images/marketing/' . $img);
 
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
+						$upMarkSql = "UPDATE marketing SET title='$title', descrive='$describe', m_image='$img', status='$status' WHERE m_id='$updateProductId'";
+						$upMarkQuery = mysqli_query($db, $upMarkSql);
 
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($upMarkQuery) {
+							header("Location: marketing.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-
 					}
+					else if (empty($image)) {
 
-					// Only Password & Not Image Chnage
-					else if (!empty($password) && empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
+						$upMarkSql = "UPDATE marketing SET title='$title', descrive='$describe', status='$status' WHERE m_id='$updateProductId'";
+						$upMarkQuery = mysqli_query($db, $upMarkSql);
 
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
-						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Not Image Chnage
-					else if (empty($password) && empty($image)) {
-
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($upMarkQuery) {
+							header("Location: marketing.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-
 					}
 				}
 			}
