@@ -394,7 +394,7 @@
 			}
 
 			else if ( $do == "Update" ) {
-				if (isset($_POST['upUser'])) {
+				if (isset($_POST['updateFarmer'])) {
 					$updateUserId 	= mysqli_real_escape_string($db, $_POST['updateUserId']);
 					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
 					$email 			= mysqli_real_escape_string($db, $_POST['email']);
