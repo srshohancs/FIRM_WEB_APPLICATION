@@ -77,8 +77,8 @@
 												      <th scope="row"><?php echo $i; ?></th>
 												      <td>
 												      	<?php  
-												      		if (!empty($user_image)) {
-																echo '<img src="assets/images/farmer/' . $user_image . '" style="width: 60px";>';
+												      		if (!empty($farm_image)) {
+																echo '<img src="assets/images/farmer/' . $farm_image . '" style="width: 60px";>';
 															}
 															else {
 																echo '<img src="assets/images/farmer/default.jpg" style="width: 60px";>';
@@ -280,34 +280,34 @@
 			else if ( $do == "Edit" ) {
 				if (isset($_GET['uId'])) {
 					$upId = $_GET['uId'];
-					$upReadSql = "SELECT * FROM users WHERE user_id='$upId'";
+					$upReadSql = "SELECT * FROM farmer WHERE farm_id='$upId'";
 					$upReadQuery = mysqli_query($db, $upReadSql);
 
 					while ( $row = mysqli_fetch_assoc($upReadQuery) ) {
-						$user_id 		= $row['user_id'];
-			  			$user_name 		= $row['user_name'];
-			  			$user_email 	= $row['user_email'];
-			  			$user_password 	= $row['user_password'];
-			  			$user_phone 	= $row['user_phone'];
-			  			$user_address 	= $row['user_address'];
-			  			$role 			= $row['role'];
+						$farm_id 		= $row['farm_id'];
+			  			$farm_name 		= $row['farm_name'];
+			  			$farm_phone 	= $row['farm_phone'];
+			  			$farm_email 	= $row['farm_email'];
+			  			$farm_address 	= $row['farm_address'];
+			  			$farm_about 	= $row['farm_about'];
 			  			$status 		= $row['status'];
-			  			$user_image 	= $row['user_image'];
+			  			$farm_image 	= $row['farm_image'];
+			  			$join_date 		= $row['join_date'];
 			  			?>
 			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-								<div class="breadcrumb-title pe-3">Users Management</div>
+								<div class="breadcrumb-title pe-3">Farmer Management</div>
 								<div class="ps-3">
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 p-0">
 											<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 											</li>
-											<li class="breadcrumb-item active" aria-current="page">Edit User</li>
+											<li class="breadcrumb-item active" aria-current="page">Edit Farmer</li>
 										</ol>
 									</nav>
 								</div>
 							</div>
 							<!--end breadcrumb-->
-							<h6 class="mb-0 text-uppercase">Update <span style="color: firebrick;"><?php echo $user_email; ?></span> Info</h6>
+							<h6 class="mb-0 text-uppercase">Update <span style="color: firebrick;"><?php echo $farm_email; ?></span> Info</h6>
 							<hr>
 							<div class="card">
 								<div class="card-body">
@@ -316,75 +316,65 @@
 											<div class="row">
 												
 												<!-- ########## START: FORM ########## -->
-												<form action="users.php?do=Update" method="POST" enctype="multipart/form-data">
+												<form action="farmer.php?do=Update" method="POST" enctype="multipart/form-data">
 													<div class="row">
 														<div class="col-lg-4">
 															<div class="mb-3">
 																<label for="">Full Name</label>
-																<input type="text" name="fname" class="form-control" placeholder="enter user name" required autocomplete="off" value="<?php echo $user_name; ?>">
+																<input type="text" name="fname" class="form-control" placeholder="enter farmer name" required autocomplete="off" value="<?php echo $farm_name; ?>">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Email Address</label>
+																<input type="email" name="email" class="form-control" placeholder="enter user email" required autocomplete="off" value="<?php echo $farm_email; ?>">
 															</div>
 
 															<div class="mb-3">
 																<label for="">Phone No.</label>
-																<input type="tel" name="phone" class="form-control" placeholder="enter phone no.." required autocomplete="off" value="<?php echo $user_phone; ?>">
-															</div>
-
-															<div class="mb-3">
-																<label for="">Password</label>
-																<input type="password" name="password" class="form-control" placeholder="**********" autocomplete="off">
-															</div>
-
-															<div class="mb-3">
-																<label for="">Re-Password</label>
-																<input type="password" name="re_password" class="form-control" placeholder="**********" autocomplete="off">
-															</div>
-														</div>
-														<div class="col-lg-4">
-															<div class="mb-3">
-																<label for="">Address</label>
-																<textarea name="address" class="form-control" id="" cols="30" rows="4" autocomplete="off" placeholder="address...."><?php echo $user_address; ?></textarea>
-															</div>
-
-															<div class="mb-3">
-																<label for="">Role</label>
-																<select class="form-select" name="role">
-																  <option>Please select the user role</option>
-																  <option value="1" <?php if( $role == 1 ){ echo "selected"; } ?>>Admin</option>
-																  <option value="2" <?php if( $role == 2 ){ echo "selected"; } ?>>User</option>
-																</select>
+																<input type="tel" name="phone" class="form-control" placeholder="enter phone no.." required autocomplete="off" value="<?php echo $farm_phone; ?>">
 															</div>
 
 															<div class="mb-3">
 																<label for="">Status</label>
 																<select class="form-select" name="status">
-																  <option value="">Please select the Status</option>
-																  <option value="1" <?php if( $status == 1 ){ echo "selected"; } ?>>Active</option>
-																  <option value="0" <?php if( $status == 0 ){ echo "selected"; } ?>>InActive</option>
+																  <option value="1">Please select the Status</option>
+																  <option value="1" <?php if( $status == 1 ) { echo "selected"; } ?>>Active</option>
+																  <option value="0" <?php if( $status == 0 ) { echo "selected"; } ?>>InActive</option>
 																</select>
+															</div>														
+															
+														</div>
+														<div class="col-lg-4">								
+															<div class="mb-3">
+																<label for="">About Farmer</label>
+																<textarea name="about" class="form-control" id="" cols="30" rows="6" autocomplete="off" placeholder="about...."><?php echo $farm_about; ?></textarea>
+															</div>
+
+															<div class="mb-3">
+																<label for="">Address</label>
+																<textarea name="address" class="form-control" id="" cols="30" rows="3" autocomplete="off" placeholder="address...."><?php echo $farm_address; ?></textarea>
 															</div>
 														</div>
 														<div class="col-lg-4">
-															
-
 															<div class="mb-3">
 																<label for="">Image</label>
-																<br><br>
+																<br>
 																<?php  
-														      		if (!empty($user_image)) {
-																		echo '<img src="assets/images/users/' . $user_image . '" style="width: 100%; height: 200px;">';
-																	}
-																	else {
-																		echo "Sorry! No Image Uploaded.";
-																	}
-														      	?>
-														      	<br><br>
+																if (!empty($farm_image)) {
+																	echo '<img src="assets/images/farmer/' . $farm_image . '" style="width: 100%; height:200px;";>';
+																}
+																else {
+																	echo 'Not Image Found';
+																}
+																?>
+																<br><br>
 																<input class="form-control" name="image" type="file">
 															</div>
 
 															<div class="mb-3">
 																<div class="d-grid gap-2">
-																	<input type="hidden" name="updateUserId" value="<?php echo $user_id; ?>">
-																	<input type="submit" name="upUser" class="btn btn-primary" value="Update New User">
+																	<input type="hidden" name="updateFarmerId" value="<?php echo $farm_id; ?>">
+																	<input type="submit" name="updateFarmer" class="btn btn-primary" value="Update Farmer Info">
 																</div>
 															</div>
 														</div>
