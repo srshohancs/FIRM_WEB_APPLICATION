@@ -611,11 +611,11 @@
 			else if ( $do == "Delete" ) {
 				if (isset($_GET['DId'])) {
 					$deleteId = $_GET['DId'];
-					$deleteSql = "DELETE FROM users WHERE user_id='$deleteId' ";
+					$deleteSql = "DELETE FROM farmer WHERE farm_id='$deleteId' ";
 					$deleteQuery = mysqli_query($db, $deleteSql);
 
 					if ($deleteQuery) {
-						header("Location: users.php?do=Manage");
+						header("Location: farmer.php?do=Manage");
 					}
 					else {
 						die("Mysql Error." . mysqli_error($db));
