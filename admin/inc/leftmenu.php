@@ -73,6 +73,24 @@
 
 				</ul>
 			</li>
+
+			<li class="menu-label">Marketing Management</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-diamond'></i>
+					</div>
+					<div class="menu-title">Showcase Product</div>
+				</a>
+				<ul>
+					<li> <a href="marketing.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage</a>
+					</li>
+					<li> <a href="marketing.php?do=Add"><i class="bx bx-radio-circle"></i>Add New product</a>
+					</li>
+					<li> <a href="marketing.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
+
+				</ul>
+			</li>
 		</ul>
 		<!--end navigation-->
 	</div>
