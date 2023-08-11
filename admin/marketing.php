@@ -58,10 +58,11 @@
 									  			$i = 0;
 
 										  		while ($row = mysqli_fetch_assoc($markQuery)) {
-										  			$m_id  		= $row['m_id '];
+										  			$m_id  		= $row['m_id'];
 										  			$title 		= $row['title'];
 										  			$descrive 	= $row['descrive'];
 										  			$m_image 	= $row['m_image'];
+										  			$status 	= $row['status'];
 										  			$join_date 	= $row['join_date'];
 										  			$i++;
 										  			?>
@@ -79,7 +80,7 @@
 												      	?>
 												      </td>
 												      <td><?php echo $title; ?></td>
-												      <td><?php echo substr($descrive, 0, 15); ?></td>
+												      <td><?php echo substr($descrive, 0, 15); ?>...</td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
@@ -215,46 +216,31 @@
 			<?php }
 
 			else if ( $do == "Store" ) {
-				if (isset($_POST['addUser'])) {
-					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
-					$email 			= mysqli_real_escape_string($db, $_POST['email']);
-					$password 		= mysqli_real_escape_string($db, $_POST['password']);
-					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
-					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
-					$address 		= mysqli_real_escape_string($db, $_POST['address']);
-					$role 			= mysqli_real_escape_string($db, $_POST['role']);
+				if (isset($_POST['addProduct'])) {
+					$title 			= mysqli_real_escape_string($db, $_POST['title']);
+					$describe 		= mysqli_real_escape_string($db, $_POST['describe']);
 					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					
 					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 		= $_FILES['image']['tmp_name'];
 
-
-					if ($password == $re_password) {
-						$hassedPass = sha1($password);
-
-						if (!empty($image)) {
+					if (!empty($image)) {
 							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
-						}
-						else {
-							$img = '';
-						}
-
-						$addSql = "INSERT INTO users (user_name, user_email, user_password,	user_phone,	user_address, role, status, user_image,	join_date) VALUES('$fname', '$email', '$hassedPass', '$phone', '$address', '$role', '$status', '$img', now())";
-						$addQuery = mysqli_query($db, $addSql);
-
-						if ($addQuery) {
-							header("Location: users.php?do=Manage");
-						}
-						else {
-							die ("Mysql Error." .mysqli_error($db) );
-						}
+							move_uploaded_file($temp_img, 'assets/images/marketing/' . $img);
 					}
-					else { ?>
-						<div class="alert alert-warning text-center" role="alert">
-						  Sorry! please password and repassword use same input.
-						</div>
-					<?php }
+					else {
+						$img = '';
+					}
+
+					$addSql = "INSERT INTO marketing (title, descrive, m_image,	status, join_date) VALUES('$title', '$describe', '$img', '$status', now())";
+					$addQuery = mysqli_query($db, $addSql);
+
+					if ($addQuery) {
+						header("Location: marketing.php?do=Manage");
+					}
+					else {
+						die ("Mysql Error." .mysqli_error($db) );
+					}
 				}
 			}
 
