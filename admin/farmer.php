@@ -448,11 +448,11 @@
 			else if ( $do == "Trash" ) {
 				if (isset($_GET['tId'])) {
 					$trushId = $_GET['tId'];
-					$trushSql = "UPDATE users SET status=0 WHERE user_id='$trushId'";
+					$trushSql = "UPDATE farmer SET status=0 WHERE farm_id='$trushId'";
 					$trushQuery = mysqli_query( $db, $trushSql );
 
 					if ($trushQuery) {
-						header("Location: users.php?do=Manage");
+						header("Location: farmer.php?do=Manage");
 					}
 					else {
 						die("mysql error" . mysqli_error($db));
@@ -463,19 +463,19 @@
 
 			else if ( $do == "ManageTrash" ) { ?>
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">Users Management</div>
+					<div class="breadcrumb-title pe-3">Farmer Trash Management</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Trash Manage</li>
+								<li class="breadcrumb-item active" aria-current="page">Farmer Trash Manage</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Manage All Trash</h6>
+				<h6 class="mb-0 text-uppercase">Trash Manage Farmer</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
@@ -492,7 +492,7 @@
 									      <th scope="col">Email</th>
 									      <th scope="col">Phone No.</th>
 									      <th scope="col">Address</th>
-									      <th scope="col">Role</th>
+									      <th scope="col">About Farmer</th>
 									      <th scope="col">Status</th>
 									      <th scope="col">Join date</th>
 									      <th scope="col">Action</th>
@@ -501,28 +501,28 @@
 
 									  <tbody>
 									  	<?php  
-									  		$userSql = "SELECT * FROM users WHERE status=0 ORDER BY user_name ASC";
-									  		$userQuery = mysqli_query( $db, $userSql );
-									  		$userCount = mysqli_num_rows($userQuery);
+									  		$farmerSql = "SELECT * FROM farmer WHERE status=0 ORDER BY farm_name ASC";
+									  		$farmerQuery = mysqli_query( $db, $farmerSql );
+									  		$farmerCount = mysqli_num_rows($farmerQuery);
 
-									  		if ($userCount == 0) { ?>
+									  		if ($farmerCount == 0) { ?>
 									  			<div class="alert alert-warning text-center" role="alert">
-												  Sorry! No User Found into the Database.
+												  Sorry! No Farmer Found into the Database.
 												</div>
 									  		<?php }
 
 									  		else {
 									  			$i = 0;
 
-										  		while ($row = mysqli_fetch_assoc($userQuery)) {
-										  			$user_id 		= $row['user_id'];
-										  			$user_name 		= $row['user_name'];
-										  			$user_email 	= $row['user_email'];
-										  			$user_phone 	= $row['user_phone'];
-										  			$user_address 	= $row['user_address'];
-										  			$role 			= $row['role'];
+										  		while ($row = mysqli_fetch_assoc($farmerQuery)) {
+										  			$farm_id 		= $row['farm_id'];
+										  			$farm_name 		= $row['farm_name'];
+										  			$farm_phone 	= $row['farm_phone'];
+										  			$farm_email 	= $row['farm_email'];
+										  			$farm_address 	= $row['farm_address'];
+										  			$farm_about 	= $row['farm_about'];
 										  			$status 		= $row['status'];
-										  			$user_image 	= $row['user_image'];
+										  			$farm_image 	= $row['farm_image'];
 										  			$join_date 		= $row['join_date'];
 										  			$i++;
 										  			?>
@@ -531,28 +531,19 @@
 												      <th scope="row"><?php echo $i; ?></th>
 												      <td>
 												      	<?php  
-												      		if (!empty($user_image)) {
-																echo '<img src="assets/images/users/' . $user_image . '" style="width: 60px";>';
+												      		if (!empty($farm_image)) {
+																echo '<img src="assets/images/farmer/' . $farm_image . '" style="width: 60px";>';
 															}
 															else {
-																echo '<img src="assets/images/users/default.png" style="width: 60px";>';
+																echo '<img src="assets/images/farmer/default.jpg" style="width: 60px";>';
 															}
 												      	?>
 												      </td>
-												      <td><?php echo $user_name; ?></td>
-												      <td><?php echo $user_email; ?></td>
-												      <td><?php echo $user_phone; ?></td>
-												      <td><?php echo $user_address; ?></td>
-												      <td>
-												      	<?php  
-												      		if ($role == 1) { ?>
-												      			<span class="badge text-bg-success">ADMIN</span>
-												      		<?php }
-												      		else if ($role == 2) { ?>
-												      			<span class="badge text-bg-primary">USER</span>
-												      		<?php }
-												      	?>
-												      </td>
+												      <td><?php echo $farm_name; ?></td>
+												      <td><?php echo $farm_email; ?></td>
+												      <td><?php echo $farm_phone; ?></td>
+												      <td><?php echo substr($farm_address, 0, 15); ?>...</td>
+												      <td><?php echo substr($farm_about, 0, 15); ?>... </td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
@@ -568,25 +559,25 @@
 												      	<div class="action-btn">
 															<ul>
 															    <li>
-															      <a href="users.php?do=Edit&uId=<?php echo $user_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+															      <a href="farmer.php?do=Edit&uId=<?php echo $farm_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
 															    </li>
 															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#delId<?php echo $user_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $farm_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
 															    </li>
 															</ul>
 														</div>
 
 														<!-- Modal Start -->
-														<div class="modal fade" id="delId<?php echo $user_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="uId<?php echo $farm_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														  <div class="modal-dialog">
 														    <div class="modal-content">
 														      <div class="modal-header">
-														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $user_name; ?></span> !!</h1>
+														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $farm_name; ?></span></h1>
 														        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														      </div>
 														      <div class="modal-body">
 														        <div class="modal-btn">
-														        	<a href="users.php?do=Delete&DId=<?php echo $user_id; ?>"class="btn btn-danger me-3">Delete</a>
+														        	<a href="farmer.php?do=Delete&DId=<?php echo $farm_id; ?>"class="btn btn-danger me-3">Delete</a>
 														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
 														        </div>
 														      </div>
