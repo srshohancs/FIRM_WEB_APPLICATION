@@ -394,11 +394,11 @@
 			else if ( $do == "Trash" ) {
 				if (isset($_GET['tId'])) {
 					$trushId = $_GET['tId'];
-					$trushSql = "UPDATE users SET status=0 WHERE user_id='$trushId'";
+					$trushSql = "UPDATE marketing SET status=0 WHERE m_id='$trushId'";
 					$trushQuery = mysqli_query( $db, $trushSql );
 
 					if ($trushQuery) {
-						header("Location: users.php?do=Manage");
+						header("Location: marketing.php?do=Manage");
 					}
 					else {
 						die("mysql error" . mysqli_error($db));
