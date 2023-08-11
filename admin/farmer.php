@@ -260,7 +260,7 @@
 							move_uploaded_file($temp_img, 'assets/images/farmer/' . $img);
 						}
 						else {
-							$img = ''
+							$img = '';
 						}
 
 
