@@ -164,7 +164,7 @@
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Add New Product for Marketing Sector</h6>
+				<h6 class="mb-0 text-uppercase">Add New for About Us</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
@@ -182,11 +182,14 @@
 												</div>
 
 												<div class="mb-3">
-													<label for="">Describe</label>
-													<textarea name="describe" class="form-control" id="" cols="30" rows="7" autocomplete="off" placeholder="describe...."></textarea>
+													<label for="">Per Year</label>
+													<input type="text" name="per_year" class="form-control" placeholder="per year.." required autocomplete="off">
 												</div>
-											</div>
-											<div class="col-lg-6">
+
+												<div class="mb-3">
+													<label for="">Farm Total Age</label>
+													<input type="text" name="ft_age" class="form-control" placeholder="total age..." required autocomplete="off">
+												</div>
 
 												<div class="mb-3">
 													<label for="">Status</label>
@@ -196,6 +199,14 @@
 													  <option value="0">InActive</option>
 													</select>
 												</div>
+												
+											</div>
+											<div class="col-lg-6">
+
+												<div class="mb-3">
+													<label for="">Describe</label>
+													<textarea name="describe" class="form-control" id="" cols="30" rows="7" autocomplete="off" placeholder="describe...."></textarea>
+												</div>
 
 												<div class="mb-3">
 													<label for="">Image</label>
@@ -204,7 +215,7 @@
 
 												<div class="mb-3">
 													<div class="d-grid gap-2">
-														<input type="submit" name="addProduct" class="btn btn-primary" value="Add New Marketing">
+														<input type="submit" name="addAbout" class="btn btn-primary" value="Create new About Us">
 													</div>
 												</div>
 											</div>
