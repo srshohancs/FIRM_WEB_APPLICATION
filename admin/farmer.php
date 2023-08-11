@@ -88,8 +88,8 @@
 												      <td><?php echo $farm_name; ?></td>
 												      <td><?php echo $farm_email; ?></td>
 												      <td><?php echo $farm_phone; ?></td>
-												      <td><?php echo substr($farm_address, 0, 20); ?></td>
-												      <td><?php echo substr($farm_about, 0, 20); ?></td>
+												      <td><?php echo substr($farm_address, 0, 15); ?>...</td>
+												      <td><?php echo substr($farm_about, 0, 15); ?>... </td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
@@ -395,115 +395,52 @@
 
 			else if ( $do == "Update" ) {
 				if (isset($_POST['updateFarmer'])) {
-					$updateUserId 	= mysqli_real_escape_string($db, $_POST['updateUserId']);
-					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
-					$email 			= mysqli_real_escape_string($db, $_POST['email']);
-					$password 		= mysqli_real_escape_string($db, $_POST['password']);
-					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
-					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
-					$address 		= mysqli_real_escape_string($db, $_POST['address']);
-					$role 			= mysqli_real_escape_string($db, $_POST['role']);
-					$status 		= mysqli_real_escape_string($db, $_POST['status']);
+					$updateFarmerId 	= mysqli_real_escape_string($db, $_POST['updateFarmerId']);
+					$fname 				= mysqli_real_escape_string($db, $_POST['fname']);
+					$email 				= mysqli_real_escape_string($db, $_POST['email']);				
+					$address 			= mysqli_real_escape_string($db, $_POST['address']);
+					$phone 				= mysqli_real_escape_string($db, $_POST['phone']);
+					$about 				= mysqli_real_escape_string($db, $_POST['about']);
+					$status 			= mysqli_real_escape_string($db, $_POST['status']);
 					
-					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
-					$temp_img 		= $_FILES['image']['tmp_name'];
+					$image 				= mysqli_real_escape_string($db,$_FILES['image']['name']);
+					$temp_img 			= $_FILES['image']['tmp_name'];
 
-					// Only Password & Only Image Chnage
-					if (!empty($password) && !empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
-
-							// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
-
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
-
-							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
-
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
-						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Only Image Chnage
-					else if (empty($password) && !empty($image)) {
+					if (!empty($image)) {
 
 						// Delete Old Image From  Folder
-							$oldImgSql = "SELECT * FROM users WHERE user_id='$updateUserId'";
-							$oldImageQuery = mysqli_query($db, $oldImgSql);
+						$oldImgSql = "SELECT * FROM farmer WHERE farm_id='$updateFarmerId'";
+						$oldImageQuery = mysqli_query($db, $oldImgSql);
 
-							while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-								$oldImage 	= $row['user_image'];
-								unlink("assets/images/users/$img" . $oldImage);
-							}
+						while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
+							$oldImage 	= $row['farm_image'];
+							unlink("assets/images/farmer/$img" . $oldImage);
+						}
 
 						$img = rand(0, 999999) . "_" . $image;
-						move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+						move_uploaded_file($temp_img, 'assets/images/farmer/' . $img);
 
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status', user_image='$img' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
+						$updatefarmerSql = "UPDATE farmer SET farm_name='$fname', farm_phone='$phone', farm_email='$email', farm_address='$address', farm_about='$about', farm_image='$img', status='$status' WHERE farm_id='$updateFarmerId'";
+						$upatefarmerQuery = mysqli_query($db, $updatefarmerSql);
 
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($upatefarmerQuery) {
+							header("Location: farmer.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-
 					}
+					else if (empty($image)) {
 
-					// Only Password & Not Image Chnage
-					else if (!empty($password) && empty($image)) {
-						if ($password == $re_password) {
-							$hassedPass = sha1($password);
+						$updatefarmerSql = "UPDATE farmer SET farm_name='$fname', farm_phone='$phone', farm_email='$email', farm_address='$address', farm_about='$about', status='$status' WHERE farm_id='$updateFarmerId'";
+						$upatefarmerQuery = mysqli_query($db, $updatefarmerSql);
 
-							$updateUserSql = "UPDATE users SET user_name='$fname', user_password='$hassedPass', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-							$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-							if ($upateUserQuery) {
-								header("Location: users.php?do=Manage");
-							}
-							else {
-								die ("Mysql Error." .mysqli_error($db) );
-							}
-						}
-						else { ?>
-							<div class="alert alert-warning text-center" role="alert">
-							  Sorry! please password and repassword use same input.
-							</div>
-						<?php }
-					}
-
-					// Not Password & Not Image Chnage
-					else if (empty($password) && empty($image)) {
-
-						$updateUserSql = "UPDATE users SET user_name='$fname', user_phone='$phone', user_address='$address', role='$role', status='$status' WHERE user_id='$updateUserId'";
-						$upateUserQuery = mysqli_query($db, $updateUserSql);
-
-						if ($upateUserQuery) {
-							header("Location: users.php?do=Manage");
+						if ($upatefarmerQuery) {
+							header("Location: farmer.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-
 					}
 				}
 			}
