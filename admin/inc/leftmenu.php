@@ -91,6 +91,24 @@
 
 				</ul>
 			</li>
+
+			<li class="menu-label">About Us</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-video-recording'></i>
+					</div>
+					<div class="menu-title">About Us</div>
+				</a>
+				<ul>
+					<li> <a href="about.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage About Us</a>
+					</li>
+					<li> <a href="about.php?do=Add"><i class="bx bx-radio-circle"></i>Add About us</a>
+					</li>
+					<li> <a href="about.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
+
+				</ul>
+			</li>
 		</ul>
 		<!--end navigation-->
 	</div>
