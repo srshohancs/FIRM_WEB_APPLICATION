@@ -195,8 +195,6 @@
 													<label for="">Address</label>
 													<textarea name="address" class="form-control" id="" cols="30" rows="3" autocomplete="off" placeholder="address...."></textarea>
 												</div>
-
-												
 												
 											</div>
 											<div class="col-lg-4">
@@ -245,46 +243,37 @@
 			<?php }
 
 			else if ( $do == "Store" ) {
-				if (isset($_POST['addUser'])) {
+				if (isset($_POST['addFarmer'])) {
 					$fname 			= mysqli_real_escape_string($db, $_POST['fname']);
-					$email 			= mysqli_real_escape_string($db, $_POST['email']);
-					$password 		= mysqli_real_escape_string($db, $_POST['password']);
-					$re_password 	= mysqli_real_escape_string($db, $_POST['re_password']);
-					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
+					$email 			= mysqli_real_escape_string($db, $_POST['email']);					
 					$address 		= mysqli_real_escape_string($db, $_POST['address']);
-					$role 			= mysqli_real_escape_string($db, $_POST['role']);
+					$phone 			= mysqli_real_escape_string($db, $_POST['phone']);
+					$about 			= mysqli_real_escape_string($db, $_POST['about']);
 					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					
 					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 		= $_FILES['image']['tmp_name'];
 
 
-					if ($password == $re_password) {
-						$hassedPass = sha1($password);
-
 						if (!empty($image)) {
 							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/users/' . $img);
+							move_uploaded_file($temp_img, 'assets/images/farmer/' . $img);
 						}
 						else {
 							$img = '';
 						}
 
-						$addSql = "INSERT INTO users (user_name, user_email, user_password,	user_phone,	user_address, role, status, user_image,	join_date) VALUES('$fname', '$email', '$hassedPass', '$phone', '$address', '$role', '$status', '$img', now())";
-						$addQuery = mysqli_query($db, $addSql);
 
-						if ($addQuery) {
-							header("Location: users.php?do=Manage");
+						$farmAddSql = "INSERT INTO farmer (farm_name, farm_phone, farm_email, farm_address,	farm_about, farm_image, status,	join_date) VALUES('$fname', '$phone', '$email', '$address', '$about', '$img', '$status', now())";
+						$farmAddQuery = mysqli_query($db, $farmAddSql);
+
+						if ($farmAddQuery) {
+							header("Location: farmer.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
-					}
-					else { ?>
-						<div class="alert alert-warning text-center" role="alert">
-						  Sorry! please password and repassword use same input.
-						</div>
-					<?php }
+
 				}
 			}
 
