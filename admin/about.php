@@ -95,7 +95,6 @@
 												      		<?php }
 												      	?>
 												      </td>
-												      <td><?php echo $join_date; ?></td>
 												      <td>
 												      	<div class="action-btn">
 															<ul>
@@ -173,7 +172,7 @@
 								<div class="row">
 									
 									<!-- ########## START: FORM ########## -->
-									<form action="marketing.php?do=Store" method="POST" enctype="multipart/form-data">
+									<form action="about.php?do=Store" method="POST" enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-lg-6">
 												<div class="mb-3">
@@ -187,8 +186,8 @@
 												</div>
 
 												<div class="mb-3">
-													<label for="">Farm Total Age</label>
-													<input type="text" name="ft_age" class="form-control" placeholder="total age..." required autocomplete="off">
+													<label for="">Farm Total Age [5 Years Running..]</label>
+													<input type="text" name="ft_age" class="form-control" placeholder="total age..." autocomplete="off" value="5 years">
 												</div>
 
 												<div class="mb-3">
@@ -231,27 +230,29 @@
 			<?php }
 
 			else if ( $do == "Store" ) {
-				if (isset($_POST['addProduct'])) {
+				if (isset($_POST['addAbout'])) {
 					$title 			= mysqli_real_escape_string($db, $_POST['title']);
-					$describe 		= mysqli_real_escape_string($db, $_POST['describe']);
+					$per_year 		= mysqli_real_escape_string($db, $_POST['per_year']);
+					$ft_age 		= mysqli_real_escape_string($db, $_POST['ft_age']);					
 					$status 		= mysqli_real_escape_string($db, $_POST['status']);
+					$describe 		= mysqli_real_escape_string($db, $_POST['describe']);
 					
 					$image 			= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 		= $_FILES['image']['tmp_name'];
 
 					if (!empty($image)) {
 							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/marketing/' . $img);
+							move_uploaded_file($temp_img, 'assets/images/aboutUs/' . $img);
 					}
 					else {
 						$img = '';
 					}
 
-					$addSql = "INSERT INTO marketing (title, descrive, m_image,	status, join_date) VALUES('$title', '$describe', '$img', '$status', now())";
+					$addSql = "INSERT INTO about (title, descrive, year, total_age,	a_image, status) VALUES('$title', '$describe', '$per_year', '$ft_age', '$img','$status')";
 					$addQuery = mysqli_query($db, $addSql);
 
 					if ($addQuery) {
-						header("Location: marketing.php?do=Manage");
+						header("Location: about.php?do=Manage");
 					}
 					else {
 						die ("Mysql Error." .mysqli_error($db) );
