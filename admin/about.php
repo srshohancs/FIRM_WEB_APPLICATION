@@ -578,11 +578,11 @@
 			else if ( $do == "Delete" ) {
 				if (isset($_GET['DId'])) {
 					$deleteId = $_GET['DId'];
-					$deleteSql = "DELETE FROM marketing WHERE m_id='$deleteId' ";
+					$deleteSql = "DELETE FROM about WHERE id='$deleteId' ";
 					$deleteQuery = mysqli_query($db, $deleteSql);
 
 					if ($deleteQuery) {
-						header("Location: marketing.php?do=Manage");
+						header("Location: about.php?do=Manage");
 					}
 					else {
 						die("Mysql Error." . mysqli_error($db));
