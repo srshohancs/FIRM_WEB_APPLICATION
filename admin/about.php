@@ -436,19 +436,19 @@
 
 			else if ( $do == "ManageTrash" ) { ?>
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">About Us Management</div>
+					<div class="breadcrumb-title pe-3">Trash About Us Management</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">About Us Manage</li>
+								<li class="breadcrumb-item active" aria-current="page">Trash About Us Manage</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Trash Manage All Marketing Sector</h6>
+				<h6 class="mb-0 text-uppercase">Trash Manage All About Us</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
@@ -463,19 +463,20 @@
 									      <th scope="col">Image</th>
 									      <th scope="col">Title</th>
 									      <th scope="col">Description</th>
+									      <th scope="col">Per Year</th>
+									      <th scope="col">Firm Total Age</th>
 									      <th scope="col">Status</th>
-									      <th scope="col">Join date</th>
 									      <th scope="col">Action</th>
 									    </tr>
 									  </thead>
 
 									  <tbody>
 									  	<?php  
-											$markSql = "SELECT * FROM marketing WHERE status=0 ORDER BY title ASC";
-									  		$markQuery = mysqli_query( $db, $markSql );
-									  		$markCount = mysqli_num_rows($markQuery);
+											$aboutSql = "SELECT * FROM about WHERE status=0 ORDER BY title ASC";
+									  		$aboutQuery = mysqli_query( $db, $aboutSql );
+									  		$aboutCount = mysqli_num_rows($aboutQuery);
 
-									  		if ($markCount == 0) { ?>
+									  		if ($aboutCount == 0) { ?>
 									  			<div class="alert alert-warning text-center" role="alert">
 												  Sorry! No Product Found into the Database.
 												</div>
@@ -484,13 +485,14 @@
 									  		else {
 									  			$i = 0;
 
-										  		while ($row = mysqli_fetch_assoc($markQuery)) {
-										  			$m_id  		= $row['m_id'];
+										  		while ($row = mysqli_fetch_assoc($aboutQuery)) {
+										  			$id  		= $row['id'];
 										  			$title 		= $row['title'];
 										  			$descrive 	= $row['descrive'];
-										  			$m_image 	= $row['m_image'];
+										  			$year 		= $row['year'];
+										  			$total_age 	= $row['total_age'];
+										  			$a_image 	= $row['a_image'];
 										  			$status 	= $row['status'];
-										  			$join_date 	= $row['join_date'];
 										  			$i++;
 										  			?>
 
@@ -498,16 +500,18 @@
 												      <th scope="row"><?php echo $i; ?></th>
 												      <td>
 												      	<?php  
-												      		if (!empty($m_image)) {
-																echo '<img src="assets/images/marketing/' . $m_image . '" style="width: 60px";>';
+												      		if (!empty($a_image)) {
+																echo '<img src="assets/images/aboutUs/' . $a_image . '" style="width: 60px";>';
 															}
 															else {
-																echo '<img src="assets/images/marketing/default.jpg" style="width: 60px";>';
+																echo 'No Image';
 															}
 												      	?>
 												      </td>
 												      <td><?php echo $title; ?></td>
 												      <td><?php echo substr($descrive, 0, 15); ?>...</td>
+												      <td><?php echo $year; ?></td>
+												      <td><?php echo $total_age; ?></td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
@@ -518,21 +522,20 @@
 												      		<?php }
 												      	?>
 												      </td>
-												      <td><?php echo $join_date; ?></td>
 												      <td>
 												      	<div class="action-btn">
 															<ul>
 															    <li>
-															      <a href="marketing.php?do=Edit&uId=<?php echo $m_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+															      <a href="about.php?do=Edit&uId=<?php echo $id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
 															    </li>
 															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $m_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
 															    </li>
 															</ul>
 														</div>
 
 														<!-- Modal Start -->
-														<div class="modal fade" id="uId<?php echo $m_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="uId<?php echo $id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														  <div class="modal-dialog">
 														    <div class="modal-content">
 														      <div class="modal-header">
@@ -541,7 +544,7 @@
 														      </div>
 														      <div class="modal-body">
 														        <div class="modal-btn">
-														        	<a href="marketing.php?do=Delete&DId=<?php echo $m_id; ?>"class="btn btn-danger me-3">Delete</a>
+														        	<a href="about.php?do=Delete&DId=<?php echo $id; ?>"class="btn btn-danger me-3">Delete</a>
 														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
 														        </div>
 														      </div>
