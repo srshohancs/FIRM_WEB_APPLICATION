@@ -109,6 +109,24 @@
 
 				</ul>
 			</li>
+
+			<li class="menu-label">Farm Overview</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-repeat'></i>
+					</div>
+					<div class="menu-title">Farm Overview</div>
+				</a>
+				<ul>
+					<li> <a href="farm_overview.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage</a>
+					</li>
+					<li> <a href="farm_overview.php?do=Add"><i class="bx bx-radio-circle"></i>Add </a>
+					</li>
+					<li> <a href="farm_overview.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
+
+				</ul>
+			</li>
 		</ul>
 		<!--end navigation-->
 	</div>
