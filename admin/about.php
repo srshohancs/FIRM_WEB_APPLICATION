@@ -297,7 +297,7 @@
 											<div class="row">
 												
 												<!-- ########## START: FORM ########## -->
-												<form action="about.php?do=Store" method="POST" enctype="multipart/form-data">
+												<form action="about.php?do=Update" method="POST" enctype="multipart/form-data">
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="mb-3">
@@ -311,13 +311,8 @@
 															</div>
 
 															<div class="mb-3">
-																<label for="">Farm Total Age [5 Years Running..]</label>
-																<input  name="ft_age" class="form-control" placeholder="total age..." autocomplete="off" value="<?php echo $total_age; ?>">
-															</div>
-
-															<div class="mb-3">
 																<label for="">Describe</label>
-																<textarea name="describe" class="form-control" id="" cols="30" rows="5" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
+																<textarea name="describe" class="form-control" id="" cols="30" rows="8" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
 															</div>
 
 															
@@ -372,35 +367,37 @@
 			}
 
 			else if ( $do == "Update" ) {
-				if (isset($_POST['updateProduct'])) {
-					$updateProductId 	= mysqli_real_escape_string($db, $_POST['updateProductId']);
+				if (isset($_POST['updateAbout'])) {
+					$updateAboutId 		= mysqli_real_escape_string($db, $_POST['updateAboutId']);
 					$title 				= mysqli_real_escape_string($db, $_POST['title']);
-					$describe 			= mysqli_real_escape_string($db, $_POST['describe']);
+					$per_year 			= mysqli_real_escape_string($db, $_POST['per_year']);
+										
 					$status 			= mysqli_real_escape_string($db, $_POST['status']);
+					$describe 			= mysqli_real_escape_string($db, $_POST['describe']);
 					
 					$image 				= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 			= $_FILES['image']['tmp_name'];
 
-					// Only Password & Only Image Chnage
+					// Only Image Chnage
 					if (!empty($image)) {
 
 						// Delete Old Image From  Folder
-						$oldImgSql = "SELECT * FROM marketing WHERE m_id='$updateProductId'";
+						$oldImgSql = "SELECT * FROM about WHERE id='$updateAboutId'";
 						$oldImageQuery = mysqli_query($db, $oldImgSql);
 
 						while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
 							$oldImage 	= $row['m_image'];
-							unlink("assets/images/marketing/$img" . $oldImage);
+							unlink("assets/images/aboutUs/$img" . $oldImage);
 						}
 
 						$img = rand(0, 999999) . "_" . $image;
-						move_uploaded_file($temp_img, 'assets/images/marketing/' . $img);
+						move_uploaded_file($temp_img, 'assets/images/aboutUs/' . $img);
 
-						$upMarkSql = "UPDATE marketing SET title='$title', descrive='$describe', m_image='$img', status='$status' WHERE m_id='$updateProductId'";
-						$upMarkQuery = mysqli_query($db, $upMarkSql);
+						$upAboutSql = "UPDATE about SET title='$title', descrive='$describe', year='$per_year', a_image='$img', status='$status' WHERE id='$updateAboutId'";
+						$upAboutQuery = mysqli_query($db, $upAboutSql);
 
-						if ($upMarkQuery) {
-							header("Location: marketing.php?do=Manage");
+						if ($upAboutQuery) {
+							header("Location: about.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
@@ -408,11 +405,11 @@
 					}
 					else if (empty($image)) {
 
-						$upMarkSql = "UPDATE marketing SET title='$title', descrive='$describe', status='$status' WHERE m_id='$updateProductId'";
-						$upMarkQuery = mysqli_query($db, $upMarkSql);
+						$upAboutSql = "UPDATE about SET title='$title', descrive='$describe', year='$per_year', status='$status' WHERE id='$updateAboutId'";
+						$upAboutQuery = mysqli_query($db, $upAboutSql);
 
-						if ($upMarkQuery) {
-							header("Location: marketing.php?do=Manage");
+						if ($upAboutQuery) {
+							header("Location: about.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
