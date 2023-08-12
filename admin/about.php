@@ -263,25 +263,26 @@
 			else if ( $do == "Edit" ) {
 				if (isset($_GET['uId'])) {
 					$upId = $_GET['uId'];
-					$upReadSql = "SELECT * FROM marketing WHERE m_id='$upId'";
+					$upReadSql = "SELECT * FROM about WHERE id='$upId'";
 					$upReadQuery = mysqli_query($db, $upReadSql);
 
 					while ( $row = mysqli_fetch_assoc($upReadQuery) ) {
-						$m_id  		= $row['m_id'];
+						$id  		= $row['id'];
 			  			$title 		= $row['title'];
 			  			$descrive 	= $row['descrive'];
-			  			$m_image 	= $row['m_image'];
+			  			$year 		= $row['year'];
+			  			$total_age 	= $row['total_age'];
+			  			$a_image 	= $row['a_image'];
 			  			$status 	= $row['status'];
-			  			$join_date 	= $row['join_date'];
 			  			?>
 			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-								<div class="breadcrumb-title pe-3">About Us Management</div>
+								<div class="breadcrumb-title pe-3">Edit About Us Management</div>
 								<div class="ps-3">
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 p-0">
 											<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 											</li>
-											<li class="breadcrumb-item active" aria-current="page">About Us Manage</li>
+											<li class="breadcrumb-item active" aria-current="page">Edit About Us</li>
 										</ol>
 									</nav>
 								</div>
@@ -296,7 +297,7 @@
 											<div class="row">
 												
 												<!-- ########## START: FORM ########## -->
-												<form action="marketing.php?do=Update" method="POST" enctype="multipart/form-data">
+												<form action="about.php?do=Store" method="POST" enctype="multipart/form-data">
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="mb-3">
@@ -305,30 +306,43 @@
 															</div>
 
 															<div class="mb-3">
-																<label for="">Describe</label>
-																<textarea name="describe" class="form-control" id="" cols="30" rows="7" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
+																<label for="">Per Year</label>
+																<input type="text" name="per_year" class="form-control" placeholder="per year.." required autocomplete="off" value="<?php echo $year; ?>">
 															</div>
+
+															<div class="mb-3">
+																<label for="">Farm Total Age [5 Years Running..]</label>
+																<input  name="ft_age" class="form-control" placeholder="total age..." autocomplete="off" value="<?php echo $total_age; ?>">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Describe</label>
+																<textarea name="describe" class="form-control" id="" cols="30" rows="5" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
+															</div>
+
+															
+															
+														</div>
+														<div class="col-lg-6">
 
 															<div class="mb-3">
 																<label for="">Status</label>
 																<select class="form-select" name="status">
 																  <option value="1">Please select the Status</option>
-																  <option value="1" <?php if( $status == 1 ){ echo "selected";} ?>>Active</option>
-																  <option value="0" <?php if( $status == 0 ){ echo "selected";} ?>>InActive</option>
+																  <option value="1" <?php if( $status == 1 ) { echo "selected"; } ?>>Active</option>
+																  <option value="0" <?php if( $status == 0 ) { echo "selected"; } ?>>InActive</option>
 																</select>
 															</div>
-														</div>
-														<div class="col-lg-6">
 
 															<div class="mb-3">
 																<label for="">Image</label>
 																<br>
 																<?php  
-														      		if (!empty($m_image)) {
-																		echo '<img src="assets/images/marketing/' . $m_image . '" style="width: 100%; height:200px;";>';
+														      		if (!empty($a_image)) {
+																		echo '<img src="assets/images/aboutUs/' . $a_image . '" style="width: 100%; height:200px;";>';
 																	}
 																	else {
-																		echo 'No Picture Uploaded';
+																		echo 'No Image';
 																	}
 														      	?>
 																<br><br>
@@ -337,8 +351,8 @@
 
 															<div class="mb-3">
 																<div class="d-grid gap-2">
-																	<input type="hidden" name="updateProductId" value="<?php echo $m_id; ?>">
-																	<input type="submit" name="updateProduct" class="btn btn-primary" value="Update New Marketing">
+																	<input type="hidden" name="updateAboutId" value="<?php echo $id; ?>">
+																	<input type="submit" name="updateAbout" class="btn btn-primary" value="Update About Us">
 																</div>
 															</div>
 														</div>
