@@ -276,26 +276,25 @@
 			else if ( $do == "Edit" ) {
 				if (isset($_GET['uId'])) {
 					$upId = $_GET['uId'];
-					$upReadSql = "SELECT * FROM about WHERE id='$upId'";
+					$upReadSql = "SELECT * FROM farm_overview WHERE ov_id='$upId'";
 					$upReadQuery = mysqli_query($db, $upReadSql);
 
 					while ( $row = mysqli_fetch_assoc($upReadQuery) ) {
-						$id  		= $row['id'];
-			  			$title 		= $row['title'];
-			  			$descrive 	= $row['descrive'];
-			  			$year 		= $row['year'];
-			  			$total_age 	= $row['total_age'];
-			  			$a_image 	= $row['a_image'];
-			  			$status 	= $row['status'];
+						$ov_id  		= $row['ov_id'];
+			  			$title 			= $row['title'];
+			  			$descrive 		= $row['descrive'];
+			  			$ov_category 	= $row['ov_category'];
+			  			$ov_image 		= $row['ov_image'];
+			  			$status 		= $row['status'];
 			  			?>
 			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-								<div class="breadcrumb-title pe-3">Farm Overview Management</div>
+								<div class="breadcrumb-title pe-3">Edit Farm Overview Management</div>
 								<div class="ps-3">
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 p-0">
 											<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 											</li>
-											<li class="breadcrumb-item active" aria-current="page">Farm Overview Manage</li>
+											<li class="breadcrumb-item active" aria-current="page">Edit Farm Overview Manage</li>
 										</ol>
 									</nav>
 								</div>
@@ -310,7 +309,7 @@
 											<div class="row">
 												
 												<!-- ########## START: FORM ########## -->
-												<form action="about.php?do=Update" method="POST" enctype="multipart/form-data">
+												<form action="farm_overview.php?do=Update" method="POST" enctype="multipart/form-data">
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="mb-3">
@@ -319,16 +318,30 @@
 															</div>
 
 															<div class="mb-3">
-																<label for="">Per Year</label>
-																<input type="text" name="per_year" class="form-control" placeholder="per year.." required autocomplete="off" value="<?php echo $year; ?>">
+																<label for="">Select the Parent Category [ If Any ]</label>
+																<select class="form-select" name="fov_category">
+																  <option value="1">Please select the parent category</option>
+																  <?php  
+																  	$p_sql = "SELECT * FROM farm_overview WHERE ov_category=1 AND status=1 ORDER BY title ASC ";
+																  	$p_query = mysqli_query($db, $p_sql);
+
+																  	while( $row = mysqli_fetch_assoc($p_query) ){
+																  		$p_cat_id  		= $row['ov_id'];
+																		$p_cat_name 	= $row['title'];
+																		?>
+
+																		<option value="<?php echo $p_cat_id; ?>" <?php if( $p_cat_id == $ov_category ){ echo "selected"; } ?> ><?php echo $p_cat_name; ?></option>
+
+																		<?php
+																  	}
+																  ?>
+																</select>
 															</div>
 
 															<div class="mb-3">
 																<label for="">Describe</label>
-																<textarea name="describe" class="form-control" id="" cols="30" rows="8" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
+																<textarea name="describe" class="form-control" id="" cols="30" rows="7" autocomplete="off" placeholder="describe...."><?php echo $descrive; ?></textarea>
 															</div>
-
-															
 															
 														</div>
 														<div class="col-lg-6">
@@ -337,17 +350,19 @@
 																<label for="">Status</label>
 																<select class="form-select" name="status">
 																  <option value="1">Please select the Status</option>
-																  <option value="1" <?php if( $status == 1 ) { echo "selected"; } ?>>Active</option>
-																  <option value="0" <?php if( $status == 0 ) { echo "selected"; } ?>>InActive</option>
+																  <option value="1" <?php if( $status == 1 ){ echo "selected"; } ?>>Active</option>
+																  <option value="0" <?php if( $status == 0 ){ echo "selected"; } ?>>InActive</option>
 																</select>
-															</div>
+															</div>	
+
+															
 
 															<div class="mb-3">
 																<label for="">Image</label>
 																<br>
 																<?php  
-														      		if (!empty($a_image)) {
-																		echo '<img src="assets/images/aboutUs/' . $a_image . '" style="width: 100%; height:200px;";>';
+														      		if (!empty($ov_image)) {
+																		echo '<img src="assets/images/overview_img/' . $ov_image . '" style="width: 100%; height: 200px;";>';
 																	}
 																	else {
 																		echo 'No Image';
@@ -359,8 +374,8 @@
 
 															<div class="mb-3">
 																<div class="d-grid gap-2">
-																	<input type="hidden" name="updateAboutId" value="<?php echo $id; ?>">
-																	<input type="submit" name="updateAbout" class="btn btn-primary" value="Update About Us">
+																	<input type="hidden" name="updateOverviewId" value="<?php echo $ov_id; ?>">
+																	<input type="submit" name="updateOverview" class="btn btn-primary" value="Update Farm Overview">
 																</div>
 															</div>
 														</div>
@@ -380,11 +395,11 @@
 			}
 
 			else if ( $do == "Update" ) {
-				if (isset($_POST['updateAbout'])) {
-					$updateAboutId 		= mysqli_real_escape_string($db, $_POST['updateAboutId']);
+				if (isset($_POST['updateOverview'])) {
+					$updateOverviewId 	= mysqli_real_escape_string($db, $_POST['updateOverviewId']);
 					$title 				= mysqli_real_escape_string($db, $_POST['title']);
-					$per_year 			= mysqli_real_escape_string($db, $_POST['per_year']);
-										
+					$fov_category 		= mysqli_real_escape_string($db, $_POST['fov_category']);
+					$status 			= mysqli_real_escape_string($db, $_POST['status']);					
 					$status 			= mysqli_real_escape_string($db, $_POST['status']);
 					$describe 			= mysqli_real_escape_string($db, $_POST['describe']);
 					
@@ -395,34 +410,33 @@
 					if (!empty($image)) {
 
 						// Delete Old Image From  Folder
-						$oldImgSql = "SELECT * FROM about WHERE id='$updateAboutId'";
+						$oldImgSql = "SELECT * FROM farm_overview WHERE ov_id='$updateOverviewId'";
 						$oldImageQuery = mysqli_query($db, $oldImgSql);
 
 						while ( $row = mysqli_fetch_assoc($oldImageQuery) ) {
-							$oldImage 	= $row['m_image'];
-							unlink("assets/images/aboutUs/$img" . $oldImage);
+							$oldImage 	= $row['ov_image'];
+							unlink("assets/images/overview_img/$img" . $oldImage);
 						}
 
 						$img = rand(0, 999999) . "_" . $image;
-						move_uploaded_file($temp_img, 'assets/images/aboutUs/' . $img);
+						move_uploaded_file($temp_img, 'assets/images/overview_img/' . $img);
 
-						$upAboutSql = "UPDATE about SET title='$title', descrive='$describe', year='$per_year', a_image='$img', status='$status' WHERE id='$updateAboutId'";
-						$upAboutQuery = mysqli_query($db, $upAboutSql);
+						$upadteSql = "UPDATE farm_overview SET title='$title', descrive='$describe', ov_category='$fov_category', ov_image='$img', status='$status' WHERE ov_id='$updateOverviewId'";
+						$upadteQuery = mysqli_query($db, $upadteSql);
 
-						if ($upAboutQuery) {
-							header("Location: about.php?do=Manage");
+						if ($upadteQuery) {
+							header("Location: farm_overview.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
 						}
 					}
 					else if (empty($image)) {
+						$upadteSql = "UPDATE farm_overview SET title='$title', descrive='$describe', ov_category='$fov_category', status='$status' WHERE ov_id='$updateOverviewId'";
+						$upadteQuery = mysqli_query($db, $upadteSql);
 
-						$upAboutSql = "UPDATE about SET title='$title', descrive='$describe', year='$per_year', status='$status' WHERE id='$updateAboutId'";
-						$upAboutQuery = mysqli_query($db, $upAboutSql);
-
-						if ($upAboutQuery) {
-							header("Location: about.php?do=Manage");
+						if ($upadteQuery) {
+							header("Location: farm_overview.php?do=Manage");
 						}
 						else {
 							die ("Mysql Error." .mysqli_error($db) );
