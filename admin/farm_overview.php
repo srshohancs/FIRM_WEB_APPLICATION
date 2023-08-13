@@ -44,7 +44,7 @@
 
 									  <tbody>
 									  	<?php  
-											$overviewSql = "SELECT * FROM farm_overview WHERE status=1 ORDER BY title ASC";
+											$overviewSql = "SELECT * FROM farm_overview WHERE ov_category=1 AND status=1 ORDER BY title ASC";
 									  		$overviewQuery = mysqli_query( $db, $overviewSql );
 									  		$overviewCount = mysqli_num_rows($overviewQuery);
 
@@ -132,9 +132,96 @@
 												    </tr>
 
 										  			<?php
-										  		}
 
-									  		}
+										  			// Sub Category Use Start
+													$subOverviewSql = "SELECT * FROM farm_overview WHERE ov_category='$ov_id' AND status=1 ORDER BY title ASC";
+													$subOverviewQuery = mysqli_query( $db, $subOverviewSql );
+													$subOverviewCount = mysqli_num_rows($overviewQuery);
+
+														while ($row = mysqli_fetch_assoc($subOverviewQuery)) {
+															$ov_id  		= $row['ov_id'];
+															$title 			= $row['title'];
+															$descrive 		= $row['descrive'];
+															$ov_category 	= $row['ov_category'];
+															$ov_image 		= $row['ov_image'];
+															$status 		= $row['status'];
+															$i++;
+															?>
+
+															<tr>
+														      <th scope="row"><?php echo $i; ?></th>
+														      <td>
+														      	<?php  
+														      		if (!empty($ov_image)) {
+																		echo '<img src="assets/images/overview_img/' . $ov_image . '" style="width: 60px";>';
+																	}
+																	else {
+																		echo 'No Image';
+																	}
+														      	?>
+														      </td>
+														      <td> -- <?php echo $title; ?></td>
+														      <td><?php echo substr($descrive, 0, 15); ?>...</td>
+														      <td>
+
+														      	<?php  
+														      		if ($ov_category == 1) { ?>
+														      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
+														      		<?php }
+														      		else { ?>
+														      			<span class="badge text-bg-secondary">CHILD CATEGORY</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<?php  
+														      		if ($status == 1) { ?>
+														      			<span class="badge text-bg-info">ACTIVE</span>
+														      		<?php }
+														      		else if ($status == 0) { ?>
+														      			<span class="badge text-bg-danger">INACTIVE</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<div class="action-btn">
+																	<ul>
+																	    <li>
+																	      <a href="farm_overview.php?do=Edit&uId=<?php echo $ov_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+																	    </li>
+																	    <li>
+																	      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $ov_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+																	    </li>
+																	</ul>
+																</div>
+
+																<!-- Modal Start -->
+																<div class="modal fade" id="uId<?php echo $ov_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																  <div class="modal-dialog">
+																    <div class="modal-content">
+																      <div class="modal-header">
+																        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Move <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $title; ?></span> Trash folder!!</h1>
+																        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																      </div>
+																      <div class="modal-body">
+																        <div class="modal-btn">
+																        	<a href="farm_overview.php?do=Trash&tId=<?php echo $ov_id; ?>"class="btn btn-danger me-3">Trash</a>
+																        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
+																        </div>
+																      </div>
+																    </div>
+																  </div>
+																</div>
+																<!-- Modal End -->
+
+														      </td>
+														    </tr>
+														    <?php
+										  			// Sub Category Use Start
+
+										  		} //2nd
+										  	} // 1st
+									  	}
 									  	?>
 									    
 									  </tbody>
@@ -448,11 +535,11 @@
 			else if ( $do == "Trash" ) {
 				if (isset($_GET['tId'])) {
 					$trushId = $_GET['tId'];
-					$trushSql = "UPDATE about SET status=0 WHERE id='$trushId'";
+					$trushSql = "UPDATE farm_overview SET status=0 WHERE id='$trushId'";
 					$trushQuery = mysqli_query( $db, $trushSql );
 
 					if ($trushQuery) {
-						header("Location: about.php?do=Manage");
+						header("Location: farm_overview.php?do=Manage");
 					}
 					else {
 						die("mysql error" . mysqli_error($db));
