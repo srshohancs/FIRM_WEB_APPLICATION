@@ -153,19 +153,19 @@
 
 			else if ( $do == "Add" ) { ?>
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">Farm Overview Management</div>
+					<div class="breadcrumb-title pe-3">Add Farm Overview</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Farm Overview Manage</li>
+								<li class="breadcrumb-item active" aria-current="page">Add Farm Overview</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Add New for About Us</h6>
+				<h6 class="mb-0 text-uppercase">Add Farm Overview</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
@@ -174,7 +174,7 @@
 								<div class="row">
 									
 									<!-- ########## START: FORM ########## -->
-									<form action="about.php?do=Store" method="POST" enctype="multipart/form-data">
+									<form action="farm_overview.php?do=Store" method="POST" enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-lg-6">
 												<div class="mb-3">
