@@ -183,13 +183,24 @@
 												</div>
 
 												<div class="mb-3">
-													<label for="">Per Year</label>
-													<input type="text" name="per_year" class="form-control" placeholder="per year.." required autocomplete="off">
-												</div>
+													<label for="">Select the Parent Category [ If Any ]</label>
+													<select class="form-select" name="fov_category">
+													  <option value="1">Please select the parent category</option>
+													  <?php  
+													  	$sql = "SELECT * FROM farm_overview WHERE ov_category=1 AND status=1 ORDER BY title ASC ";
+													  	$query = mysqli_query($db, $sql);
 
-												<div class="mb-3">
-													<label for="">Farm Total Age [5 Years Running..]</label>
-													<input type="text" name="ft_age" class="form-control" placeholder="total age..." autocomplete="off" value="5 years">
+													  	while( $row = mysqli_fetch_assoc($query) ){
+													  		$ov_id  		= $row['ov_id'];
+															$title	 		= $row['title'];
+																?>
+
+																<option value="<?php echo $ov_id; ?>"><?php echo $title; ?></option>
+
+																<?php
+													  	}
+													  ?>
+													</select>
 												</div>
 
 												<div class="mb-3">
@@ -206,7 +217,7 @@
 
 												<div class="mb-3">
 													<label for="">Describe</label>
-													<textarea name="describe" class="form-control" id="" cols="30" rows="7" autocomplete="off" placeholder="describe...."></textarea>
+													<textarea name="describe" class="form-control" id="" cols="30" rows="4" autocomplete="off" placeholder="describe...."></textarea>
 												</div>
 
 												<div class="mb-3">
@@ -216,7 +227,7 @@
 
 												<div class="mb-3">
 													<div class="d-grid gap-2">
-														<input type="submit" name="addAbout" class="btn btn-primary" value="Create new About Us">
+														<input type="submit" name="addOverview" class="btn btn-primary" value="Create new Farm Overview">
 													</div>
 												</div>
 											</div>
