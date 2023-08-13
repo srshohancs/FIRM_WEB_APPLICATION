@@ -535,7 +535,7 @@
 			else if ( $do == "Trash" ) {
 				if (isset($_GET['tId'])) {
 					$trushId = $_GET['tId'];
-					$trushSql = "UPDATE farm_overview SET status=0 WHERE id='$trushId'";
+					$trushSql = "UPDATE farm_overview SET status=0 WHERE ov_id='$trushId'";
 					$trushQuery = mysqli_query( $db, $trushSql );
 
 					if ($trushQuery) {
@@ -550,19 +550,19 @@
 
 			else if ( $do == "ManageTrash" ) { ?>
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">Farm Overview Management</div>
+					<div class="breadcrumb-title pe-3">Farm Overview Trash Management</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Farm Overview Manage</li>
+								<li class="breadcrumb-item active" aria-current="page">Farm Overview Trash Manage</li>
 							</ol>
 						</nav>
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">Trash Manage All About Us</h6>
+				<h6 class="mb-0 text-uppercase">Trash Manage All Farm Overview</h6>
 				<hr>
 				<div class="card">
 					<div class="card-body">
@@ -577,8 +577,7 @@
 									      <th scope="col">Image</th>
 									      <th scope="col">Title</th>
 									      <th scope="col">Description</th>
-									      <th scope="col">Per Year</th>
-									      <th scope="col">Firm Total Age</th>
+									      <th scope="col">Category</th>
 									      <th scope="col">Status</th>
 									      <th scope="col">Action</th>
 									    </tr>
@@ -586,27 +585,25 @@
 
 									  <tbody>
 									  	<?php  
-											$aboutSql = "SELECT * FROM about WHERE status=0 ORDER BY title ASC";
-									  		$aboutQuery = mysqli_query( $db, $aboutSql );
-									  		$aboutCount = mysqli_num_rows($aboutQuery);
+											$overviewSql = "SELECT * FROM farm_overview WHERE status=0 ORDER BY title ASC";
+									  		$overviewQuery = mysqli_query( $db, $overviewSql );
+									  		$overviewCount = mysqli_num_rows($overviewQuery);
 
-									  		if ($aboutCount == 0) { ?>
+									  		if ($overviewCount == 0) { ?>
 									  			<div class="alert alert-warning text-center" role="alert">
-												  Sorry! No Product Found into the Database.
+												  Sorry! No Overview Found into the Database.
 												</div>
 									  		<?php }
 
 									  		else {
 									  			$i = 0;
-
-										  		while ($row = mysqli_fetch_assoc($aboutQuery)) {
-										  			$id  		= $row['id'];
-										  			$title 		= $row['title'];
-										  			$descrive 	= $row['descrive'];
-										  			$year 		= $row['year'];
-										  			$total_age 	= $row['total_age'];
-										  			$a_image 	= $row['a_image'];
-										  			$status 	= $row['status'];
+										  		while ($row = mysqli_fetch_assoc($overviewQuery)) {
+										  			$ov_id  		= $row['ov_id'];
+										  			$title 			= $row['title'];
+										  			$descrive 		= $row['descrive'];
+										  			$ov_category 	= $row['ov_category'];
+										  			$ov_image 		= $row['ov_image'];
+										  			$status 		= $row['status'];
 										  			$i++;
 										  			?>
 
@@ -614,8 +611,8 @@
 												      <th scope="row"><?php echo $i; ?></th>
 												      <td>
 												      	<?php  
-												      		if (!empty($a_image)) {
-																echo '<img src="assets/images/aboutUs/' . $a_image . '" style="width: 60px";>';
+												      		if (!empty($ov_image)) {
+																echo '<img src="assets/images/overview_img/' . $ov_image . '" style="width: 60px";>';
 															}
 															else {
 																echo 'No Image';
@@ -624,8 +621,16 @@
 												      </td>
 												      <td><?php echo $title; ?></td>
 												      <td><?php echo substr($descrive, 0, 15); ?>...</td>
-												      <td><?php echo $year; ?></td>
-												      <td><?php echo $total_age; ?></td>
+												      <td>
+												      	<?php  
+												      		if ($ov_category == 1) { ?>
+												      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
+												      		<?php }
+												      		else { ?>
+												      			<span class="badge text-bg-secondary">CHILD CATEGORY</span>
+												      		<?php }
+												      	?>
+												      </td>
 												      <td>
 												      	<?php  
 												      		if ($status == 1) { ?>
@@ -640,25 +645,25 @@
 												      	<div class="action-btn">
 															<ul>
 															    <li>
-															      <a href="about.php?do=Edit&uId=<?php echo $id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+															      <a href="farm_overview.php?do=Edit&uId=<?php echo $ov_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
 															    </li>
 															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $ov_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
 															    </li>
 															</ul>
 														</div>
 
 														<!-- Modal Start -->
-														<div class="modal fade" id="uId<?php echo $id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="uId<?php echo $ov_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														  <div class="modal-dialog">
 														    <div class="modal-content">
 														      <div class="modal-header">
-														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $title; ?></span></h1>
+														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $title; ?></span> </h1>
 														        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														      </div>
 														      <div class="modal-body">
 														        <div class="modal-btn">
-														        	<a href="about.php?do=Delete&DId=<?php echo $id; ?>"class="btn btn-danger me-3">Delete</a>
+														        	<a href="farm_overview.php?do=Delete&DId=<?php echo $ov_id; ?>"class="btn btn-danger me-3">Delete</a>
 														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
 														        </div>
 														      </div>
@@ -671,9 +676,96 @@
 												    </tr>
 
 										  			<?php
-										  		}
 
-									  		}
+										  			// Sub Category Use Start
+													$subOverviewSql = "SELECT * FROM farm_overview WHERE ov_category='$ov_id' AND status=1 ORDER BY title ASC";
+													$subOverviewQuery = mysqli_query( $db, $subOverviewSql );
+													$subOverviewCount = mysqli_num_rows($overviewQuery);
+
+														while ($row = mysqli_fetch_assoc($subOverviewQuery)) {
+															$ov_id  		= $row['ov_id'];
+															$title 			= $row['title'];
+															$descrive 		= $row['descrive'];
+															$ov_category 	= $row['ov_category'];
+															$ov_image 		= $row['ov_image'];
+															$status 		= $row['status'];
+															$i++;
+															?>
+
+															<tr>
+														      <th scope="row"><?php echo $i; ?></th>
+														      <td>
+														      	<?php  
+														      		if (!empty($ov_image)) {
+																		echo '<img src="assets/images/overview_img/' . $ov_image . '" style="width: 60px";>';
+																	}
+																	else {
+																		echo 'No Image';
+																	}
+														      	?>
+														      </td>
+														      <td> -- <?php echo $title; ?></td>
+														      <td><?php echo substr($descrive, 0, 15); ?>...</td>
+														      <td>
+
+														      	<?php  
+														      		if ($ov_category == 1) { ?>
+														      			<span class="badge text-bg-primary">PARENT CATEGORY</span>
+														      		<?php }
+														      		else { ?>
+														      			<span class="badge text-bg-secondary">CHILD CATEGORY</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<?php  
+														      		if ($status == 1) { ?>
+														      			<span class="badge text-bg-info">ACTIVE</span>
+														      		<?php }
+														      		else if ($status == 0) { ?>
+														      			<span class="badge text-bg-danger">INACTIVE</span>
+														      		<?php }
+														      	?>
+														      </td>
+														      <td>
+														      	<div class="action-btn">
+																	<ul>
+																	    <li>
+																	      <a href="farm_overview.php?do=Edit&uId=<?php echo $ov_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+																	    </li>
+																	    <li>
+																	      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $ov_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+																	    </li>
+																	</ul>
+																</div>
+
+																<!-- Modal Start -->
+																<div class="modal fade" id="uId<?php echo $ov_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																  <div class="modal-dialog">
+																    <div class="modal-content">
+																      <div class="modal-header">
+																        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Delete <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $title; ?></span> </h1>
+																        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																      </div>
+																      <div class="modal-body">
+																        <div class="modal-btn">
+																        	<a href="farm_overview.php?do=Delete&DId=<?php echo $ov_id; ?>"class="btn btn-danger me-3">Delete</a>
+																        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
+																        </div>
+																      </div>
+																    </div>
+																  </div>
+																</div>
+																<!-- Modal End -->
+
+														      </td>
+														    </tr>
+														    <?php
+										  			// Sub Category Use Start
+
+										  		} //2nd
+										  	} // 1st
+									  	}
 									  	?>
 									    
 									  </tbody>
@@ -687,16 +779,17 @@
 						</div>
 					</div>
 				</div>
-			<?php }
+			
+		<?php }
 
 			else if ( $do == "Delete" ) {
 				if (isset($_GET['DId'])) {
 					$deleteId = $_GET['DId'];
-					$deleteSql = "DELETE FROM about WHERE id='$deleteId' ";
+					$deleteSql = "DELETE FROM farm_overview WHERE ov_id='$deleteId' ";
 					$deleteQuery = mysqli_query($db, $deleteSql);
 
 					if ($deleteQuery) {
-						header("Location: about.php?do=Manage");
+						header("Location: farm_overview.php?do=Manage");
 					}
 					else {
 						die("Mysql Error." . mysqli_error($db));
