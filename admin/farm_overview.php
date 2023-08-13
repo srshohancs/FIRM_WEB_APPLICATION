@@ -243,10 +243,10 @@
 			<?php }
 
 			else if ( $do == "Store" ) {
-				if (isset($_POST['addAbout'])) {
+				if (isset($_POST['addOverview'])) {
 					$title 			= mysqli_real_escape_string($db, $_POST['title']);
-					$per_year 		= mysqli_real_escape_string($db, $_POST['per_year']);
-					$ft_age 		= mysqli_real_escape_string($db, $_POST['ft_age']);					
+					$fov_category 	= mysqli_real_escape_string($db, $_POST['fov_category']);
+					$status 		= mysqli_real_escape_string($db, $_POST['status']);					
 					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					$describe 		= mysqli_real_escape_string($db, $_POST['describe']);
 					
@@ -255,17 +255,17 @@
 
 					if (!empty($image)) {
 							$img = rand(0, 999999) . "_" . $image;
-							move_uploaded_file($temp_img, 'assets/images/aboutUs/' . $img);
+							move_uploaded_file($temp_img, 'assets/images/overview_img/' . $img);
 					}
 					else {
 						$img = '';
 					}
 
-					$addSql = "INSERT INTO about (title, descrive, year, total_age,	a_image, status) VALUES('$title', '$describe', '$per_year', '$ft_age', '$img','$status')";
+					$addSql = "INSERT INTO farm_overview (title, descrive, ov_category, ov_image, status) VALUES('$title', '$describe', '$fov_category', '$img', '$status')";
 					$addQuery = mysqli_query($db, $addSql);
 
 					if ($addQuery) {
-						header("Location: about.php?do=Manage");
+						header("Location: farm_overview.php?do=Manage");
 					}
 					else {
 						die ("Mysql Error." .mysqli_error($db) );
