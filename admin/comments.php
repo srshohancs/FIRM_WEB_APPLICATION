@@ -11,13 +11,13 @@
 					if ( $do == "Manage" ) { ?>
 						<!-- Top Icon -->
 						<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-							<div class="breadcrumb-title pe-3">Tables</div>
+							<div class="breadcrumb-title pe-3">Comments Management</div>
 							<div class="ps-3">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb mb-0 p-0">
-										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+										<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 										</li>
-										<li class="breadcrumb-item active" aria-current="page">Data Table</li>
+										<li class="breadcrumb-item active" aria-current="page">Comments Management</li>
 									</ol>
 								</nav>
 							</div>					
@@ -90,7 +90,7 @@
 
 														      		while( $row = mysqli_fetch_assoc($readUser_Quary) ){
 														      			$auth_id 	 = $row['user_id'];
-														      			$auth_name = $row['fullname'];
+														      			$auth_name 	 = $row['user_name'];
 
 														      			echo $auth_name;
 														      		}
@@ -177,13 +177,13 @@
 								?>
 								<!-- Top Icon -->
 						<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-							<div class="breadcrumb-title pe-3">Tables</div>
+							<div class="breadcrumb-title pe-3">Edit Comments</div>
 							<div class="ps-3">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb mb-0 p-0">
-										<li class="breadcrumb-item"><a href="comments.php?do=Manage"><i class="bx bx-home-alt"></i></a>
+										<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 										</li>
-										<li class="breadcrumb-item active" aria-current="page">Data Table</li>
+										<li class="breadcrumb-item active" aria-current="page">Edit Comments</li>
 									</ol>
 								</nav>
 							</div>					
@@ -235,7 +235,7 @@
 							$commentId 		= mysqli_real_escape_string($db, $_POST['commentId']);			
 							$status 		= mysqli_real_escape_string($db, $_POST['status']);
 
-							$commentUpdate_sql = "UPDATE comments SET  status='$status' WHERE cmt_id='$commentId' ";
+							$commentUpdate_sql = "UPDATE comments SET status='$status' WHERE cmt_id='$commentId' ";
 							$commentUpdate_query = mysqli_query($db, $commentUpdate_sql);
 
 							if ($commentUpdate_query) {
@@ -265,13 +265,13 @@
 					else if ( $do == "ManageTrash" ) { ?>
 						<!-- Top Icon -->
 						<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-							<div class="breadcrumb-title pe-3">Tables</div>
+							<div class="breadcrumb-title pe-3">Comments Management</div>
 							<div class="ps-3">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb mb-0 p-0">
-										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+										<li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
 										</li>
-										<li class="breadcrumb-item active" aria-current="page">Data Table</li>
+										<li class="breadcrumb-item active" aria-current="page">Comments Management</li>
 									</ol>
 								</nav>
 							</div>					
@@ -330,7 +330,7 @@
 
 														      		while( $row = mysqli_fetch_assoc($readUser_Quary) ){
 														      			$auth_id 	 = $row['user_id'];
-														      			$auth_name = $row['fullname'];
+														      			$auth_name = $row['user_name'];
 
 														      			echo $auth_name;
 														      		}
