@@ -1,3 +1,8 @@
+<?php  
+	ob_start();
+	include "admin/inc/db.php";
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -52,8 +57,41 @@
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="assets/css/custom.css">
 
+		<link rel="stylesheet" href="assets/css/customize.css">
+
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.min.js"></script>
+
+		<style>
+           /* Google font linking */
+           @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Quicksand:wght@300;400;500;600;700&display=swap');
+           /* Google font linking */
+
+           body{
+           		font-family: 'Quicksand', sans-serif;
+           }
+			.welcome span {
+			    color: #75B16C;
+			    background-image: url(assets/images/line.png);
+			    background-repeat: no-repeat;
+			    background-position: center;
+			    background-size: contain;
+			    font-weight: 600;
+			}
+			.welcome{
+				font-family: 'Poppins', sans-serif;
+			}
+
+			.welcome-section{
+				justify-content: space-evenly;
+			}
+
+			.year{
+				font-family: 'Cormorant Garamond', serif;
+				color: #75B16C;
+				font-weight: 600;
+			}
+		</style>
 
 	</head>
 
@@ -76,8 +114,8 @@
 							<div class="header-column">
 								<div class="header-row">
 									<div class="header-logo">
-										<a href="index.html">
-											<img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="25" src="assets/img/logo.png">
+										<a href="index.php">
+											<img alt="Porto" width="225" height="60" data-sticky-width="166" data-sticky-height="53" data-sticky-top="25" src="assets/images/logo.png">
 										</a>
 									</div>
 								</div>

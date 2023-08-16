@@ -105,5 +105,9 @@
 		<!-- Theme Initialization Files -->
 		<script src="assets/js/theme.init.js"></script>
 
+		<?php  
+			ob_end_flush();
+		?>
+
 	</body>
 </html>
