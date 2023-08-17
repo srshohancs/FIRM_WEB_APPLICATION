@@ -69,6 +69,19 @@
 
            body{
            		font-family: 'Quicksand', sans-serif;
+           		text-decoration: none;
+           }
+
+           .main{
+           	background-image: url(assets/images/1.jpg);
+		    background-repeat: no-repeat;
+		    background-position: center;
+		    background-size: cover;   
+		    background-attachment: fixed;      
+			}
+
+           a{
+           	text-decoration: none;
            }
 			.welcome span {
 			    color: #75B16C;
@@ -85,12 +98,115 @@
 			.welcome-section{
 				justify-content: space-evenly;
 			}
+			.word-rotator-words {
+			    background: #75B16C;
+			    color: #F2AA44;
+			    border-radius: 15px;
+			    font-family: 'Poppins', sans-serif;
+			}
+			.service{
+				font-family: 'Poppins', sans-serif;
+			}
+
+			.service{
+				justify-content: space-evenly;
+			}
 
 			.year{
 				font-family: 'Cormorant Garamond', serif;
 				color: #75B16C;
 				font-weight: 600;
 			}
+
+			.image-container {
+			  width: 250px; /* Set your preferred width */
+			  height: 250px; /* Set your preferred height */
+			  overflow: hidden;
+			  display: inline-block;
+			  transition: transform 0.3s ease-in-out;
+			  border-radius: 50%;
+			}
+
+			.rotate-zoom-image {
+			  width: 100%;
+			  height: 100%;
+			  object-fit: cover;
+			  transition: transform 0.3s ease-in-out;
+			   border-radius: 50%;
+			}
+
+			.rotate-zoom-image:hover {
+			  transform: scale(1.1) rotate(15deg); /* Adjust zoom and rotation values as needed */
+			}
+
+			h1.cat_head {
+			    margin: 0;
+			    font-family: 'Poppins', sans-serif;
+			}
+			.cat_head a{
+				font-family: 'Poppins', sans-serif;
+			    font-size: 25px;
+			    margin: 0 !important;
+			    text-decoration: none;
+			    color: #000;
+
+			}
+
+			.cat_desc{
+				font-family: 'Poppins', sans-serif;
+    			font-size: 25px;
+    			text-decoration: none;
+			}
+
+			.home-concept strong{
+				margin: 0;
+				color: #F2AA44;
+			}
+
+			.home-concept .process-image img {
+			    border-radius: 150px;
+			    margin: 29px 8px 0px;
+			    width: auto;
+			    height: auto;
+			    max-width: 145px;
+			    max-height: 145px;
+			}
+
+			.showcase_part{
+				background-image: url(assets/images/bg.png);
+			    background-repeat: no-repeat;
+			    background-position: center;
+			    background-size: cover;
+			    background-attachment: fixed;
+			    padding: 8%;
+
+			}
+
+
+/*		Imaga Zoom In	*/
+			.image-containers {
+			  width: 250px; /* Set your preferred width */
+			  height: 250px; /* Set your preferred height */
+			  overflow: hidden;
+			  display: inline-block;
+			  transition: transform 0.3s ease-in-out;
+			  border-radius: 10px;
+			}
+
+			.rotate-zoom-images {
+			  width: 100%;
+			  height: 100%;
+			  object-fit: cover;
+			  transition: transform 0.3s ease-in-out;
+/*			   border-radius: 50%;*/
+			}
+
+			.rotate-zoom-images:hover {
+			  transform: scale(1.1) rotate(0deg); /* Adjust zoom and rotation values as needed */
+			}
+
+			
+
 		</style>
 
 	</head>

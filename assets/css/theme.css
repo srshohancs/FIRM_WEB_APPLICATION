@@ -11,12 +11,14 @@ html {
 }
 
 body {
-	background-color: #FFF;
+	
 	color: #777;
 	font-family: "Open Sans", Arial, sans-serif;
 	font-size: 14px;
 	line-height: 26px;
 	margin: 0;
+	font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
 }
 
 body a {
