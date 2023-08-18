@@ -5837,13 +5837,14 @@ html.dark .text-muted {
 /* RTL */
 /* #Footer */
 #footer {
-	background: #212529;
-	border-top: 4px solid #212529;
+
+	margin-top: -25px; 
+	/*background: #212529;
+	border-top: 4px solid #212529;*/
 	font-size: 0.9em;
-	margin-top: 50px;
-	padding: 0;
-	position: relative;
-	clear: both;
+	padding: 5px;
+/*	position: relative;*/
+/*	clear: both;*/
 }
 
 #footer .footer-ribbon {

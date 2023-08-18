@@ -205,7 +205,49 @@
 			  transform: scale(1.1) rotate(0deg); /* Adjust zoom and rotation values as needed */
 			}
 
-			
+			.image_show{
+				background-image: url(assets/images/bg_image.png);
+			    background-repeat: no-repeat;
+			    background-position: center;
+			    background-size: cover;
+			    background-attachment: fixed;
+			}
+
+			.welcomes{
+				font-family: 'Poppins', sans-serif;
+			}
+
+			.galery{
+				color: honeydew;
+			    font-size: 22px;
+			    font-weight: 600;
+			}
+
+			.blog_card{
+				transition: 0.5s;
+				border-radius: 7px;
+			}
+
+
+			.blog_card:hover{
+				box-shadow: 1px 10px 15px #ccc;
+				transition: 0.5s;
+			}
+
+			.phone {
+			    border: dashed;
+			    padding: 24px;
+			    border-radius: 50%;
+			}
+
+			footer{
+				background-image: url(assets/images/bg-6.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;   
+/*    background-attachment: fixed;  */
+color: #000;
+			}
 
 		</style>
 
@@ -221,6 +263,7 @@
 		</div>
 		
 		<div class="body">
+			
 		<header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyStartAt': 45, 'stickySetTop': '-45px', 'stickyChangeLogo': true}">
 				<div class="header-body">
 					<div class="header-container container">
