@@ -45,7 +45,7 @@
 										</div>
 									</div>
 									<div class="post-info">
-										<a href="details.php?dId=<?php echo $post_id; ?>"><?php echo $title; ?></a>
+										<a href="blog_details.php?dId=<?php echo $post_id; ?>"><?php echo $title; ?></a>
 										<div class="post-meta">
 											 <?php echo $post_date; ?>
 										</div>

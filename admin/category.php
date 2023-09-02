@@ -35,6 +35,7 @@
 									      <th scope="col">#Sl.</th>
 									      <th scope="col">Cat_Image</th>
 									      <th scope="col">Category Name</th>
+									      <th scope="col">Price (Taka)</th>
 									      <th scope="col">Description</th>
 									      <th scope="col">Parent/Child Category</th>
 									      <th scope="col">Status</th>
@@ -66,6 +67,7 @@
 										  			$status 		= $row['status'];
 										  			$join_date 		= $row['join_date'];
 										  			$cat_image 		= $row['cat_image'];				
+										  			$price 			= $row['price'];				
 										  			$i++;
 										  			?>
 
@@ -82,6 +84,7 @@
 												      	?>
 												      </td>
 												      <td><?php echo $cat_name; ?></td>
+												      <td><?php echo $price; ?> Taka</td>
 												      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
 												      <td>
 												      	<?php  
@@ -102,35 +105,35 @@
 												      </td>
 												      <td><?php echo $join_date; ?></td>
 												      <td>
-												      	<div class="action-btn">
-															<ul>
-															    <li>
-															      <a href="category.php?do=Edit&uId=<?php echo $cat_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
-															    </li>
-															    <li>
-															      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $cat_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
-															    </li>
-															</ul>
-														</div>
+	<div class="action-btn">
+		<ul>
+		    <li>
+		      <a href="category.php?do=Edit&uId=<?php echo $cat_id; ?>"><i class="fa-regular fa-pen-to-square edit"></i></a>
+		    </li>
+		    <li>
+		      <a href=""  data-bs-toggle="modal" data-bs-target="#uId<?php echo $cat_id; ?>"><i class="fa-regular fa-trash-can trush"></i></a>
+		    </li>
+		</ul>
+	</div>
 
-														<!-- Modal Start -->
-														<div class="modal fade" id="uId<?php echo $cat_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-														  <div class="modal-dialog">
-														    <div class="modal-content">
-														      <div class="modal-header">
-														        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Move <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $cat_name; ?></span> Trash folder!!</h1>
-														        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-														      </div>
-														      <div class="modal-body">
-														        <div class="modal-btn">
-														        	<a href="category.php?do=Trash&tId=<?php echo $cat_id; ?>"class="btn btn-danger me-3">Trash</a>
-														        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
-														        </div>
-														      </div>
-														    </div>
-														  </div>
-														</div>
-														<!-- Modal End -->
+<!-- Modal Start -->
+<div class="modal fade" id="uId<?php echo $cat_id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Do You Sure?? To Move <i class="fa-regular fa-face-frown"></i><br> <span style="color: green;"><?php echo $cat_name; ?></span> Trash folder!!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-btn">
+        	<a href="category.php?do=Trash&tId=<?php echo $cat_id; ?>"class="btn btn-danger me-3">Trash</a>
+        	<a href="" class="btn btn-success" data-bs-dismiss="modal">Close</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
 
 												      </td>
 												    </tr>
@@ -148,7 +151,8 @@
 															$is_parent 		= $row['is_parent'];
 															$status 		= $row['status'];
 															$join_date 		= $row['join_date'];
-															$cat_image 		= $row['cat_image'];				
+															$cat_image 		= $row['cat_image'];			
+															$price 			= $row['price'];			
 															$i++;
 															?>
 
@@ -165,6 +169,7 @@
 														      	?>
 														      </td>
 														      <td> -- <?php echo $cat_name; ?></td>
+														      <td><?php echo $price; ?> Taka</td>
 														      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
 														      <td>
 														      	<?php  
@@ -276,6 +281,11 @@
 												</div>
 
 												<div class="mb-3">
+													<label for="">Price (Taka)</label>
+													<input type="text" name="price" class="form-control" placeholder="enter category name" required autocomplete="off">
+												</div>
+
+												<div class="mb-3">
 													<label for="">Select the Parent Category [ If Any ]</label>
 													<select class="form-select" name="is_parent">
 													  <option value="1">Please select the parent category</option>
@@ -337,6 +347,7 @@
 			else if ( $do == "Store" ) {
 				if (isset($_POST['addCategory'])) {
 					$catName 		= mysqli_real_escape_string($db, $_POST['catName']);
+					$price 			= mysqli_real_escape_string($db, $_POST['price']);
 					$is_parent 		= mysqli_real_escape_string($db, $_POST['is_parent']);
 					$status 		= mysqli_real_escape_string($db, $_POST['status']);
 					$desc 			= mysqli_real_escape_string($db, $_POST['desc']);
@@ -353,7 +364,7 @@
 						$img = '';
 					}
 
-					$addSql = "INSERT INTO category (cat_name, cat_desc, is_parent,	status, cat_image, join_date) VALUES('$catName', '$desc', '$is_parent', '$status', '$img', now())";
+					$addSql = "INSERT INTO category (cat_name, cat_desc, is_parent,	status, cat_image, join_date, price) VALUES('$catName', '$desc', '$is_parent', '$status', '$img', now(), '$price')";
 					$addQuery = mysqli_query($db, $addSql);
 
 					if ($addQuery) {
@@ -380,6 +391,7 @@
 			  			$status 		= $row['status'];
 			  			$join_date 		= $row['join_date'];
 			  			$cat_image 		= $row['cat_image'];
+			  			$price 			= $row['price'];
 			  			?>
 			  				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
 								<div class="breadcrumb-title pe-3">Category Management</div>
@@ -409,6 +421,11 @@
 															<div class="mb-3">
 																<label for="">Category Name</label>
 																<input type="text" name="catName" class="form-control" placeholder="enter category name" required autocomplete="off" value="<?php echo $cat_name; ?>">
+															</div>
+
+															<div class="mb-3">
+																<label for="">Price (Taka)</label>
+																<input type="text" name="price" class="form-control" placeholder="enter category name" required autocomplete="off" value="<?php echo $price; ?>">
 															</div>
 
 															<div class="mb-3">
@@ -495,6 +512,7 @@
 					$is_parent 			= mysqli_real_escape_string($db, $_POST['is_parent']);
 					$status 			= mysqli_real_escape_string($db, $_POST['status']);
 					$desc 				= mysqli_real_escape_string($db, $_POST['desc']);
+					$price 				= mysqli_real_escape_string($db, $_POST['price']);
 					
 					$image 				= mysqli_real_escape_string($db,$_FILES['image']['name']);
 					$temp_img 			= $_FILES['image']['tmp_name'];
@@ -511,7 +529,7 @@
 						$img = rand(0, 999999) . "_" . $image;
 						move_uploaded_file($temp_img, 'assets/images/category/' . $img);
 
-						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status', cat_image='$img' WHERE cat_id='$updateCategoryId' ";
+						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status', cat_image='$img', price='$price' WHERE cat_id='$updateCategoryId' ";
 	
 						$updateQuery = mysqli_query($db, $upSql);
 
@@ -525,7 +543,7 @@
 					}
 					else if (empty($image)){
 
-						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status' WHERE cat_id='$updateCategoryId' ";
+						$upSql = "UPDATE category SET cat_name='$catName', cat_desc='$desc', is_parent='$is_parent', status='$status', price='$price' WHERE cat_id='$updateCategoryId' ";
 						$updateQuery = mysqli_query($db, $upSql);
 
 						if ($updateQuery) {
@@ -584,6 +602,7 @@
 									      <th scope="col">#Sl.</th>
 									      <th scope="col">Cat_Image</th>
 									      <th scope="col">Category Name</th>
+									      <th scope="col">Price (Taka)</th>
 									      <th scope="col">Description</th>
 									      <th scope="col">Parent/Child Category</th>
 									      <th scope="col">Status</th>
@@ -615,6 +634,7 @@
 										  			$status 		= $row['status'];
 										  			$join_date 		= $row['join_date'];
 										  			$cat_image 		= $row['cat_image'];				
+										  			$price 			= $row['price'];				
 										  			$i++;
 										  			?>
 
@@ -631,6 +651,7 @@
 												      	?>
 												      </td>
 												      <td><?php echo $cat_name; ?></td>
+												      <td><?php echo $price; ?> Taka</td>
 												      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
 												      <td>
 												      	<?php  
@@ -700,7 +721,8 @@
 															$is_parent 		= $row['is_parent'];
 															$status 		= $row['status'];
 															$join_date 		= $row['join_date'];
-															$cat_image 		= $row['cat_image'];				
+															$cat_image 		= $row['cat_image'];			
+															$price 			= $row['price'];				
 															$i++;
 															?>
 
@@ -717,6 +739,7 @@
 														      	?>
 														      </td>
 														      <td> -- <?php echo $cat_name; ?></td>
+														      <td><?php echo $price; ?></td>
 														      <td><?php echo substr($cat_desc, 0, 20); ?>...</td>
 														      <td>
 														      	<?php  

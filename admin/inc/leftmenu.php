@@ -38,6 +38,22 @@
 				</ul>
 			</li>
 
+			<li class="menu-label">Order Management</li>
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon"><i class='bx bx-cart'></i>
+					</div>
+					<div class="menu-title">Order List</div>
+				</a>
+				<ul>
+					<li> <a href="order_list.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Order</a>
+					</li>
+					<li> <a href="order_list.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					</li>
+
+				</ul>
+			</li>
+
 			<li class="menu-label">Category Management</li>
 			<li>
 				<a href="javascript:;" class="has-arrow">
@@ -100,11 +116,17 @@
 					<div class="menu-title">About Us</div>
 				</a>
 				<ul>
+					<li> <a href="ownerinfo.php?do=Manage"><i class="bx bx-radio-circle"></i>Owner Info</a>
+					</li>
 					<li> <a href="about.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage About Us</a>
 					</li>
 					<li> <a href="about.php?do=Add"><i class="bx bx-radio-circle"></i>Add About us</a>
 					</li>
-					<li> <a href="about.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash</a>
+					<li> <a href="ownerinfo.php?do=Add"><i class="bx bx-radio-circle"></i>Add Owner</a>
+					</li>
+					<li> <a href="about.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>About Trash</a>
+					</li>
+					<li> <a href="ownerinfo.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Owner Trash</a>
 					</li>
 
 				</ul>
@@ -157,8 +179,6 @@
 					</a>
 					<ul>
 						<li> <a href="comments.php?do=Manage"><i class="bx bx-radio-circle"></i>Manage All Comments</a>
-						</li>						
-						<li> <a href="comments.php?do=ManageTrash"><i class="bx bx-radio-circle"></i>Trash Comments</a>
 						</li>						
 					</ul>
 				</li>				

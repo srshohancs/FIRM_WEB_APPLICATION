@@ -1,4 +1,5 @@
-<?php  
+<?php 
+	session_start(); 
 	ob_start();
 	include "admin/inc/db.php";
 ?>
@@ -49,7 +50,7 @@
 		<link rel="stylesheet" href="assets/vendor/circle-flip-slideshow/css/component.css">
 		
 		<!-- Demo CSS -->
-
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 
 		<!-- Skin CSS -->
 		<link rel="stylesheet" href="assets/css/skins/default.css"> 
@@ -61,6 +62,9 @@
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.min.js"></script>
+
+		<!-- FONT AWESOME CDN LINK -->
+		<script src="https://kit.fontawesome.com/0c66e46c25.js" crossorigin="anonymous"></script>
 
 		<style>
            /* Google font linking */
@@ -242,11 +246,34 @@
 
 			footer{
 				background-image: url(assets/images/bg-6.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;   
-/*    background-attachment: fixed;  */
-color: #000;
+				    background-repeat: no-repeat;
+				    background-position: center;
+				    background-size: cover;   
+				/*    background-attachment: fixed;  */
+				color: #000;
+			}
+
+			.action-btn, 
+			.modal-btn{
+			        text-align: center;
+			}
+
+			.action-btn ul{
+			        padding: 0;
+			        margin: 0;
+			}
+
+			.action-btn ul li{
+			        list-style: none;
+			        display: inline;
+			        margin: 0px 5px;
+			}
+			.action-btn ul li .edit{
+			        color: green;
+			}
+
+			.action-btn ul li .trush{
+			        color: red;
 			}
 
 		</style>

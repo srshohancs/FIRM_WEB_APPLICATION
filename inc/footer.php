@@ -13,8 +13,20 @@
 								<h5 class="text-4 mb-3" style="color: #000;">CONTACT US</h5>
 								<ul class="list list-icons list-icons-lg">
 									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">234 Street Name, City Name</p></li>
-									<li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567">(800) 123-4567</a></p></li>
-									<li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
+									<li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567">
+										<?php  
+						  					$userSql = "SELECT * FROM users WHERE role=1 AND status=1 ORDER BY user_name ASC";
+									  		$userQuery = mysqli_query( $db, $userSql );
+
+									  		while ($row = mysqli_fetch_assoc($userQuery)) {
+									  			$user_phone 	= $row['user_phone'];
+									  			?><a href="tel:+<?php echo $user_phone; ?>" style="text-decoration:none;"><?php echo $user_phone; ?></a>
+					                  					
+									  			<?php
+											}
+					                	?>
+									</a></p></li>
+									<li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:farm@gmail.com">farm@gmail.com</a></p></li>
 								</ul>
 							</div>
 						</div>
@@ -66,6 +78,16 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/js/theme.init.js"></script>
+		<!-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> -->
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+		<script>
+			new DataTable('#example');
+		</script>
+
+		
+
+
 
 		<?php  
 			ob_end_flush();

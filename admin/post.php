@@ -84,7 +84,7 @@
 																	}
 																?>
 															  </td>
-															  <td><?php echo $title; ?></td>
+															  <td><?php echo substr($title, 0, 15) ; ?>...</td>
 														      <td>
 														      	<?php  
 														      		$readCat_Sql = "SELECT * FROM category WHERE cat_id='$category_id'";
@@ -260,7 +260,7 @@
 											
 											<div class="mb-3">
 												<label for="">Description</label>
-												<textarea name="post_desc" class="form-control"  autocomplete="off" autofocus id="editor1" placeholder="category description.."></textarea>
+												<textarea name="post_desc" class="form-control"  autocomplete="off" autofocus id="editor1" placeholder="category description.." rows="5"></textarea>
 											</div>											
 
 											<div class="mb-3">
@@ -415,7 +415,7 @@
 											
 											<div class="mb-3">
 												<label for="">Description</label>
-												<textarea name="post_desc" class="form-control"  autocomplete="off" autofocus id="editor1" placeholder="category description.."><?php echo $post_desc; ?></textarea>
+												<textarea name="post_desc" class="form-control"  autocomplete="off" autofocus id="editor1" placeholder="category description.." rows="10"><?php echo $post_desc; ?></textarea>
 											</div>											
 
 											<div class="mb-3">
